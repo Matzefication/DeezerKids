@@ -1,0 +1,1 @@
+<div class="text-center" ng-class="{ 'fade-out': vm.getFlash().expired, 'alert': vm.getFlash(), 'alert-success': vm.getFlash().type === 'success', 'alert-info': vm.getFlash().type === 'info', 'alert-warning': vm.getFlash().type === 'warning', 'alert-danger': vm.getFlash().type === 'error' }" ng-if="vm.getFlash()" ng-bind="vm.getFlash().message"></div>

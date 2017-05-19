@@ -1,0 +1,73 @@
+<div class="col-xs-12 col-sm-6 col-sm-offset-3 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
+    <div class="panel panel-default">
+        <div class="panel-heading clearfix">
+            <span class="md-headline">Mehr über Ihre Gäste erfahren?</span>
+        </div>
+
+        <div class="panel-body">
+            <span class="md-subhead">Erleben Sie jetzt den Effekt einer SingleParty und lernen Sie endlich Ihre Gäste persönlich kennen.</span>
+            <BR>
+            <BR>
+            <BR>
+
+            <!-- Benutzer anmelden -->
+            <form name="form" ng-submit="vm.login()" role="form" ng-if="vm.path == '/login'">
+                <div class="form-group">
+                    <input type="email" class="form-control" ng-model="vm.username" placeholder="E-Mail Adresse" ng-required="true">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" ng-model="vm.password" placeholder="Passwort" ng-required="true">
+                </div>
+
+                <div class="form-actions text-center">
+                    <button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Anmelden</button>
+                </div>
+                <hr>
+                <div class="text-center">
+                    Sie haben noch keinen Zugang?<a href="/#/register" class="btn btn-link">Jetzt erstellen</a>
+                    <BR> Haben Sie Ihr Kennwort vergessen?<a href="/#/newpwd" class="btn btn-link">Neues Kennwort anfordern</a>
+                </div>
+            </form>
+
+            <!-- Neuen Benutzer registrieren -->
+            <form name="form" ng-submit="vm.register()" role="form" ng-if="vm.path == '/register'">
+                <div class="form-group">
+                    <input type="text" class="form-control" ng-model="vm.name" placeholder="Ihr Name" ng-required="true">
+                </div>
+                <div class="form-group">
+                    <input type="email" class="form-control" ng-model="vm.username" placeholder="E-Mail Adresse" ng-required="true">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" ng-model="vm.password" placeholder="Passwort" ng-required="true">
+                </div>
+
+                <div class="form-actions text-center">
+                    <button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Registrieren</button>
+                </div>
+                <hr>
+                <div class="text-center">
+                    Ich habe bereits einen Benutzer.
+                    <BR>
+                    <a href="/#/login" class="btn btn-link">Direkt zum Login</a>
+                </div>
+            </form>
+
+            <!-- Passwort vergessen -->
+            <form name="form" ng-submit="vm.newpwd()" role="form" ng-if="vm.path == '/newpwd'">
+                <div class="form-group">
+                    <input type="email" class="form-control" ng-model="vm.username" placeholder="E-Mail Adresse" ng-required="true">
+                </div>
+
+                <div class="form-actions text-center">
+                    <button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Neues Passwort zusenden</button>
+                </div>
+                <hr>
+                <div class="text-center">
+                    Ich erinnere mich doch wieder.
+                    <BR>
+                    <a href="/#/login" class="btn btn-link">Zurück zum Login</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

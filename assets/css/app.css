@@ -1,0 +1,99 @@
+@keyframes fadeOut {
+    from {
+        opacity: 1.0;
+    }
+    to {
+        opacity: 0.0;
+    }
+}
+
+@-webkit-keyframes fadeOut {
+    from {
+        opacity: 1.0
+    }
+    to {
+        opacity: 0.0
+    }
+}
+
+html {
+    background: url(../img/background.png) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+body {
+    padding-top: 100px;
+    font-size: 16px;
+    font-family: "Abel", Arial, sans-serif;
+    background: transparent;
+}
+
+.navbar,
+.panel {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+.panel-heading {
+    height: 55px;
+}
+
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+}
+
+.fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+.bg-primary {
+    background-color: #5fa2dd;
+}
+
+.widget-header {
+    padding: 15px 15px 50px 15px;
+    min-height: 125px;
+    position: relative;
+    overflow: hidden;
+}
+
+.widget-body {
+    padding: 50px 15px 15px;
+    position: relative;
+}
+
+.widget-img {
+    position: absolute;
+    width: 64px;
+    height: 64px;
+    left: 50%;
+    margin-left: -32px;
+    top: -32px;
+}
+
+.widget-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    min-height: 100%;
+}
+
+.img-border-light {
+    box-shadow: 0 0 0 4px #fff;
+}
+
+.img-border {
+    box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.1);
+}

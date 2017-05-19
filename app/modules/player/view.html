@@ -1,0 +1,165 @@
+<div class="col-sm-4 col-md-5 col-lg-4">
+    <div class="panel panel-default">
+        <div class="panel-heading clearfix">
+            <div class="btn-group">
+                <button class="btn btn-primary" ng-click="vm.createParty()">
+                    <i class="fa fa-plus"></i>
+                    Hinzufügen
+                </button>
+            </div>
+        </div>
+
+        <div class="panel-body">
+            <div class="list-group" ng-repeat="party in vm.allParties" ng-click="vm.showParty(party)">
+                <a href="/#/" class="list-group-item" ng-class="{'active': party == vm.selectedParty}">
+                    <h3>{{party.name}}</h3>
+                    <h4>{{party.description}}</h4>
+                    <p>{{party.valid_from | date:'dd.MM.yyyy':'+0200'}} bis {{party.valid_to | date:'dd.MM.yyyy':'+0200'}}</p>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-sm-8 col-md-7 col-lg-8">
+    <!-- No party yet -->
+    <div class="panel panel-default" ng-if="vm.mode != 'SHOW' && vm.mode != 'EDIT' && vm.mode != 'NEW'">
+        <div class="panel-heading clearfix">
+            <div class="btn-group pull-right">
+            </div>
+        </div>
+
+        <div class="panel-body">
+            <h4 class="mar-no">Sie haben noch keine Party angelegt. Worauf warten Sie?</h4>
+            <BR/>
+            <button class="btn btn-primary" ng-click="vm.createParty()">
+                <i class="fa fa-plus"></i>
+                Hinzufügen
+            </button>
+            <BR/>
+            <BR/>
+        </div>
+    </div>
+
+    <!-- Show details for a party -->
+    <div class="panel panel-default" ng-if="vm.mode == 'SHOW'">
+        <div class="panel-heading clearfix">
+            <div class="btn-group pull-right">
+                <button class="btn btn-primary" ng-click="vm.editParty(vm.selectedParty)">
+                    <i class="fa fa-pencil"></i>
+                    Ändern
+                </button>
+                <button class="btn btn-danger" ng-click="vm.deleteParty(vm.selectedParty)">
+                    <i class="fa fa-times"></i>
+                    Löschen
+                </button>
+            </div>
+        </div>
+
+        <div class="panel-body">
+            <div class="panel widget">
+                <div class="widget-header bg-primary"></div>
+                <div class="widget-body text-center">
+                    <img alt="Profile Picture" class="widget-img img-circle img-border-light" ng-src="{{vm.selectedParty.picture_url}}">
+                    <h4 class="mar-no">{{vm.selectedParty.name}}</h4>
+                    <p class="text-muted mar-btm">{{vm.selectedParty.description}}</p>
+
+                    <div class="pad-ver">
+                        <button class="btn btn-success" ng-click="vm.startParty(vm.selectedParty)">Party starten</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit an existing or new party -->
+    <div class="panel panel-default" ng-if="vm.mode == 'EDIT' || vm.mode == 'NEW'">
+        <div class="panel-heading clearfix">
+            <!-- <h3 class="panel-title pull-left">Die Party abändern</h3> -->
+            <div class="btn-group pull-right">
+                <button class="btn btn-danger" ng-click="vm.cancelEditing()">
+                    <i class="fa fa-times"></i>
+                    Abbrechen
+                </button>
+                <button class="btn btn-success" ng-click="vm.save(vm.editedParty)">
+                    <i class="fa fa-check"></i>
+                    Speichern
+                </button>
+            </div>
+        </div>
+        <div class="modal-body">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">Party-Name</label>
+                    <div class="col-xs-9">
+                        <input type="text" class="form-control" ng-model="vm.editedParty.name" placeholder="Geben Sie der Party einen Namen">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">Geben Sie uns ein paar mehr Infos</label>
+                    <div class="col-xs-9">
+                        <textarea class="form-control" rows="6" ng-model="vm.editedParty.description"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">Wählen Sie ein Bild</label>
+                    <div class="col-xs-9">
+                        <!-- Bild ist vorhanden -->
+                        <div ng-if="vm.editedParty.picture">
+                            <img ng-src="{{vm.selectedParty.picture_url}}" class="img-responsive" width="150" height="150">
+                            <div class="btn-group">
+                                <a class="btn btn-primary btn-block" href="/#/" ng-click="vm.changePicture(vm.editedParty)">
+                                    <i class="fa fa-plus"></i>
+                                    <span>Neues Bild</span>
+                                </a>
+                            </div>
+                        </div>
+                        <!-- Kein Bild vorhanden -->
+                        <div ng-if="!vm.editedParty.picture" class="fileUpload btn btn-primary">
+                            <span>Datei auswählen</span>
+                            <input type="file" accept="image/*" class="upload" sp-image fileread="vm.imageupload" />
+                        </div>
+                        <sp-crop ng-if="vm.imageupload" src="vm.imageupload" ng-model="vm.editedParty.picture"></sp-crop>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">Ihre Location</label>
+                    <div class="col-xs-9">
+                        <div ng-if="vm.mode == 'EDIT'">
+                            {{vm.editedParty.address.searchString}}
+                            <BR/>
+                            <BR/> {{vm.editedParty.address.street}} {{vm.editedParty.address.housenum}}
+                            <BR/> {{vm.editedParty.address.zipcode}} {{vm.editedParty.address.city}}
+                            <BR/>
+                            <BR/> (nachträglich nicht änderbar)
+                        </div>
+
+                        <div ng-if="vm.mode == 'NEW'">
+                            <sp-googleplaces address=vm.editedParty.address ng-model="vm.editedParty.address.searchString" />
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">Die Party läuft vom</label>
+                    <div class="col-xs-9">
+                        <md-datepicker ng-model="vm.editedParty.valid_from_obj" md-placeholder="Datum" md-min-date="vm.minDate" md-max-date="vm.maxDate"></md-datepicker>
+                        <label>&nbsp;&nbsp;&nbsp;&nbsp;bis zum</label>
+                        <md-datepicker ng-model="vm.editedParty.valid_to_obj" md-placeholder="Datum" md-min-date="vm.minDate" md-max-date="vm.maxDate"></md-datepicker>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label"></label>
+                    <div class="col-xs-9">
+                        <div ng-if="vm.mode == 'EDIT'">
+                            <md-switch ng-disabled="true" aria-label="Virtuelle Party?" class="md-primary" ng-model="vm.editedParty.virtual">Virtuelle Party? (nachträglich nicht änderbar)</md-switch>
+                        </div>
+
+                        <div ng-if="vm.mode == 'NEW'">
+                            <md-switch class="md-primary" md-no-ink aria-label="Virtuelle Party?" ng-model="vm.editedParty.virtual">Virtuelle Party?</md-switch>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
