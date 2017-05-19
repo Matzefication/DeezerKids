@@ -4,9 +4,14 @@
   "description": "Deezer for kids under parent control",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "install": "bower install",
+    "start": "electron main.js",
+    "wiredep": "wiredep -s index.html"
   },
-  "repository": "https://github.com/electron/DeezerKids",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/electron/DeezerKids.git"
+  },
   "keywords": [
     "DeezerKids",
     "deezer",
@@ -16,8 +21,8 @@
     "parent control"
   ],
   "author": "Mathias Kaniut",
-  "contributors": "https://github.com/Matzefication/DeezerKids/graphs/contributors",
   "license": "MIT",
+  "contributors": "https://github.com/Matzefication/DeezerKids/graphs/contributors",
   "bugs": {
     "url": "https://github.com/Matzefication/DeezerKids/issues"
   },
