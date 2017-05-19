@@ -4,7 +4,6 @@
   "description": "Deezer for kids under parent control",
   "main": "main.js",
   "scripts": {
-    "install": "bower install",
     "start": "electron main.js",
     "wiredep": "wiredep -s index.html"
   },
