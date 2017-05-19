@@ -1,0 +1,28 @@
+{
+  "name": "DeezerKids",
+  "version": "0.0.1",
+  "description": "Deezer for kids under parent control",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": "https://github.com/electron/DeezerKids",
+  "keywords": [
+    "DeezerKids",
+    "deezer",
+    "player",
+    "music",
+    "kids",
+    "parent control"
+  ],
+  "author": "Mathias Kaniut",
+  "contributors": "https://github.com/Matzefication/DeezerKids/graphs/contributors",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Matzefication/DeezerKids/issues"
+  },
+  "homepage": "https://github.com/Matzefication/DeezerKids#readme",
+  "devDependencies": {
+    "electron": "~1.6.2"
+  }
+}
