@@ -51,6 +51,8 @@ function createWindow () {
     // when you should delete the corresponding element.
     mainWindow = null
   })
+
+  console.log("DeezerKids gestartet...");
 }
 
 // This method will be called when Electron has finished
