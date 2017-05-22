@@ -1,20 +1,20 @@
 <!doctype html>
 
 <!-- ASSIGN OUR ANGULAR MODULE -->
-<html ng-app="scotchTodo">
+<html ng-app="DeezerKids">
 <head>
     <!-- META -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
 
-    <title>Node/Angular Todo App</title>
+    <title>Setup DeezerKids</title>
 
     <!-- SCROLLS -->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"><!-- load bootstrap -->
     <style>
         html                    { overflow-y:scroll; }
         body                    { padding-top:50px; }
-        #todo-list              { margin-bottom:30px; }
+        #account-list              { margin-bottom:30px; }
     </style>
 
     <!-- SPELLS -->
@@ -29,7 +29,7 @@
 
         <!-- HEADER AND TODO COUNT -->
         <div class="jumbotron text-center">
-            <h1>I'm a Todo-aholic <span class="label label-info">{{ todos.length }}</span></h1>
+            <h1>I'm a Todo-aholic <span class="label label-info">{{ accounts.length }}</span></h1>
         </div>
 
         <!-- TODO LIST -->
@@ -37,9 +37,9 @@
             <div class="col-sm-4 col-sm-offset-4">
 
                 <!-- LOOP OVER THE TODOS IN $scope.todos -->
-                <div class="checkbox" ng-repeat="todo in todos">
+                <div class="checkbox" ng-repeat="account in accounts">
                     <label>
-                        <input type="checkbox" ng-click="deleteTodo(todo._id)"> {{ todo.text }}
+                        <input type="checkbox" ng-click="deleteAccount(account._id)"> {{ account.accessToken }}
                     </label>
                 </div>
 
@@ -47,7 +47,7 @@
         </div>
 
         <!-- FORM TO CREATE TODOS -->
-        <div id="todo-form" class="row">
+        <div id="account-form" class="row">
             <div class="col-sm-8 col-sm-offset-2 text-center">
                 <form>
                     <div class="form-group">
@@ -57,7 +57,7 @@
                     </div>
 
                     <!-- createToDo() WILL CREATE NEW TODOS -->
-                    <button type="submit" class="btn btn-primary btn-lg" ng-click="createTodo()">Add</button>
+                    <button type="submit" class="btn btn-primary btn-lg" ng-click="createAccount()">Add</button>
                 </form>
             </div>
         </div>
