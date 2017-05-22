@@ -2,7 +2,7 @@
   "name": "DeezerKids",
   "version": "0.0.1",
   "description": "Deezer for kids under parent control",
-  "main": "js/electron.js",
+  "main": "main.js",
   "scripts": {
     "start": "sh run-start.sh"
   },
