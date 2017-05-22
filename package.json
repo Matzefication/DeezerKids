@@ -4,7 +4,8 @@
   "description": "Deezer for kids under parent control",
   "main": "main.js",
   "scripts": {
-    "start": "sh run-start.sh"
+    "start": "sh run-start.sh",
+    "install": "cd server && npm install"
   },
   "repository": {
     "type": "git",
