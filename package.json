@@ -4,9 +4,7 @@
   "description": "Deezer for kids under parent control",
   "main": "main.js",
   "scripts": {
-    "start": "sh run-start.sh",
-    "postinstall": "sh installers/postinstall/postinstall.sh",
-    "wiredep": "wiredep -s index.html"
+    "start": "electron main.js"
   },
   "repository": {
     "type": "git",
@@ -28,6 +26,6 @@
   },
   "homepage": "https://github.com/Matzefication/DeezerKids#readme",
   "devDependencies": {
-    "electron": "^1.4.7"
+    "electron": "~1.6.2"
   }
 }
