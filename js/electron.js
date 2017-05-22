@@ -1,11 +1,6 @@
 'use strict';
 
 const electron = require('electron');
-
-const core = require(__dirname + "/app.js");
-// Config
-var config = {};
-
 const app = electron.app; // Module to control application life.
 const ipcMain = electron.ipcMain; // Module to forward events to the main process
 const BrowserWindow = electron.BrowserWindow;  // Module to create native browser window.
@@ -85,10 +80,4 @@ app.on('activate', function () {
 
 ipcMain.on('online-status-changed', function(event, status) {
   console.log(status);
-});
-
-// Start the core application.
-// This starts all node helpers and starts the webserver.
-core.start(function(c) {
-	config = c;
 });
