@@ -22,7 +22,7 @@
     "url": "https://github.com/Matzefication/DeezerKids/issues"
   },
   "homepage": "https://github.com/Matzefication/DeezerKids#readme",
-  "dev-dependencies": {
+  "devDependencies": {
     "express": "~4.15.3",
     "mongoose": "~4.10.1",
     "morgan": "~1.2.2",
