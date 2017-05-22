@@ -8,7 +8,7 @@
 
     // configuration =================
     console.log("Deezer.Kids connecting to local database");
-    mongoose.connect('mongodb://127.0.1.1:27017/DeezerKids');     // connect to mongoDB database
+    mongoose.connect('mongodb://127.0.0.1/DeezerKids');     // connect to mongoDB database
 
     var db = mongoose.connection;
     db.on('error', console.error.bind(console, 'connection error:'));
