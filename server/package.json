@@ -1,7 +1,7 @@
 {
   "name": "DeezerKidsPU",
   "version": "0.0.1",
-  "description": "Deezer for kids under parent control",
+  "description": "Parent Unit for DeezerKids",
   "main": "server.js",
   "repository": {
     "type": "git",
@@ -24,7 +24,6 @@
   "homepage": "https://github.com/Matzefication/DeezerKids#readme",
   "dependencies": {
     "express": "~4.15.3",
-    "connect": "*",
     "mongoose": "~4.10.1",
     "morgan": "~1.2.2",
     "body-parser": "~1.5.2",
