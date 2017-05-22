@@ -1,6 +1,11 @@
 'use strict';
 
 const electron = require('electron');
+
+const core = require(__dirname + "/app.js");
+// Config
+var config = {};
+
 const app = electron.app; // Module to control application life.
 const ipcMain = electron.ipcMain; // Module to forward events to the main process
 const BrowserWindow = electron.BrowserWindow;  // Module to create native browser window.
@@ -51,14 +56,15 @@ function createWindow () {
     // when you should delete the corresponding element.
     mainWindow = null
   })
-
-  console.log("DeezerKids gestartet...");
 }
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on('ready', createWindow)
+app.on('ready', function () {
+  console.log("Launching DeezerKids.");
+  createWindow();
+})
 
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
@@ -79,4 +85,10 @@ app.on('activate', function () {
 
 ipcMain.on('online-status-changed', function(event, status) {
   console.log(status);
+});
+
+// Start the core application.
+// This starts all node helpers and starts the webserver.
+core.start(function(c) {
+	config = c;
 });
