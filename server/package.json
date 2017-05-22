@@ -1,5 +1,5 @@
 {
-  "name": "DeezerKids Parent Unit",
+  "name": "DeezerKidsPU",
   "version": "0.0.1",
   "description": "Deezer for kids under parent control",
   "main": "server.js",
