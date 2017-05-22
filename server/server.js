@@ -38,6 +38,45 @@
         });
     });
 
+    // create account and send back all accounts after creation
+    app.post('/api/accounts', function(req, res) {
+
+        // create a account, information comes from AJAX request from Angular
+        DeezerAccount.create({
+            accessToken : req.body.text,
+            expire : '12345',
+            userID : 'Matzefication'
+        }, function(err, account) {
+            if (err)
+                res.send(err);
+
+            // get and return all the accounts after you create another
+            DeezerAccount.find(function(err, accounts) {
+                if (err)
+                    res.send(err)
+                res.json(accounts);
+            });
+        });
+
+    });
+
+    // delete a account
+    app.delete('/api/accounts/:account_id', function(req, res) {
+        DeezerAccount.remove({
+            _id : req.params.account_id
+        }, function(err, account) {
+            if (err)
+                res.send(err);
+
+            // get and return all the todos after you create another
+            DeezerAccount.find(function(err, accounts) {
+                if (err)
+                    res.send(err)
+                res.json(accounts);
+            });
+        });
+    });
+
     // application -------------------------------------------------------------
     app.get('*', function(req, res) {
         res.sendfile('./public/index.html'); // load the single view file (angular will handle the page changes on the front-end)
