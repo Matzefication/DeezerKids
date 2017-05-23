@@ -50,6 +50,7 @@ DeezerKids.controller("AppController", function($scope, $route, $routeParams, $l
 	rootScope = $rootScope;
 	scope = $scope;
 
+	/*
 	DZ.init({
 		appId: APP_ID,
 		channelUrl: CHANNEL_URL,
@@ -57,6 +58,7 @@ DeezerKids.controller("AppController", function($scope, $route, $routeParams, $l
 
 		}
 	});
+	*/
 
 	// --------------------------------------------------- Methods
 
