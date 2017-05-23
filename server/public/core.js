@@ -2,9 +2,9 @@ var LOGNS = 'DeezerKids:';
 var APP_ID = '236482';
 var CHANNEL_URL = 'http://www.beup2date.com/DeezerKids/channel.html';
 
-var DeezerKids = angular.module('DeezerKids', ["firebase"]);
+var DeezerKids = angular.module('DeezerKids', []);
 
-DeezerKids.controller('AppController', function($scope, $rootScope, $http, $firebaseObject) {
+DeezerKids.controller('AppController', function($scope, $rootScope, $http) {
     
 	// Init config
 	$scope.login = false;
