@@ -78,8 +78,7 @@ DeezerKids.controller("AppController", function($scope, $route, $routeParams, $l
 	$scope.logged = function() {
 		$scope.logged = true;
 		console.log(LOGNS, 'Player loaded');
-		$('#controls').css('opacity', 1);
-		$scope.handleRoute();
+		//$('#controls').css('opacity', 1);
 	};
 
 	// --------------------------------------------------- DZ events
