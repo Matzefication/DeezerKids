@@ -33,8 +33,9 @@ DeezerKids.controller("AppController", function($scope, $route, $routeParams, $l
 	DZ.init({
 		appId: APP_ID,
 		channelUrl: CHANNEL_URL
-		console.log(LOGNS, 'Deezer-API initialiazed successfully');
 	});
+	
+	console.log(LOGNS, 'Deezer-API initialiazed successfully');
 
 	// --------------------------------------------------- Methods
 
