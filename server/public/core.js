@@ -4,7 +4,7 @@ var CHANNEL_URL = 'http://www.beup2date.com/DeezerKids/channel.html';
 
 var DeezerKids = angular.module('DeezerKids', []);
 
-DeezerKids.controller("AppController", function($scope, $route, $routeParams, $location, $rootScope) {
+DeezerKids.controller("AppController", function($scope, $route, $routeParams, $location, $rootScope, $http) {
     
 	$scope.formData = {};
 
