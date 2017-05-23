@@ -13,9 +13,11 @@ DeezerKids.controller("AppController", function($scope, $route, $routeParams, $l
 	$http.get('/api/accounts')
 		.success(function(data) {
 			if (data.length == 1) {
+				console.log(LOGNS, 'Account already loggedin');
 				$scope.account = data[0];
 				$scope.login = true;
 			} else {
+				console.log(LOGNS, 'Account not loggedin yet');
 				$scope.login = false;
 			}
 			console.log(LOGNS, data);
@@ -31,6 +33,7 @@ DeezerKids.controller("AppController", function($scope, $route, $routeParams, $l
 	DZ.init({
 		appId: APP_ID,
 		channelUrl: CHANNEL_URL
+		console.log(LOGNS, 'Deezer-API initialiazed successfully');
 	});
 
 	// --------------------------------------------------- Methods
