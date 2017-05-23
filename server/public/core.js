@@ -45,6 +45,7 @@ DeezerKids.controller("AppController", function($scope, $route, $routeParams, $l
     
 	// Init config
 	$scope.logged = false;
+	$scope.view = 'login';
 
 	// Global for test purpose
 	rootScope = $rootScope;
