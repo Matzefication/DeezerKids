@@ -1,51 +1,29 @@
 var LOGNS = 'DeezerKids:';
 var APP_ID = '236482';
 var CHANNEL_URL = 'http://www.beup2date.com/DeezerKids/channel.html';
+var account = { };
 
 var DeezerKids = angular.module('DeezerKids', []);
 
 DeezerKids.controller("AppController", function($scope, $route, $routeParams, $location, $rootScope, $http) {
     
-	$scope.formData = {};
+	// Init config
+	$scope.login = false;
 
 	// when landing on the page, get all accounts and show them
 	$http.get('/api/accounts')
 		.success(function(data) {
-			$scope.accounts = data;
-			console.log(data);
+			if (data.length == 1) {
+				$scope.account = data[0];
+				$scope.login = true;
+			} else {
+				$scope.login = false;
+			}
+			console.log(LOGNS, data);
 		})
 		.error(function(data) {
-			console.log('Error: ' + data);
+			console.log(LOGNS, 'Error: ' + data);
 		});
-
-	// when submitting the add form, send the text to the node API
-	$scope.createAccount = function() {
-		$http.post('/api/accounts', $scope.formData)
-			.success(function(data) {
-				$scope.formData = {}; // clear the form so our user is ready to enter another
-				$scope.accounts = data;
-				console.log(data);
-			})
-			.error(function(data) {
-				console.log('Error: ' + data);
-			});
-	};
-
-	// delete a account after checking it
-	$scope.deleteAccount = function(id) {
-		$http.delete('/api/accounts/' + id)
-			.success(function(data) {
-				$scope.accounts = data;
-				console.log(data);
-			})
-			.error(function(data) {
-				console.log('Error: ' + data);
-			});
-	};    
-    
-	// Init config
-	$scope.logged = false;
-	$scope.view = 'login';
 
 	// Global for test purpose
 	rootScope = $rootScope;
@@ -63,35 +41,45 @@ DeezerKids.controller("AppController", function($scope, $route, $routeParams, $l
 
 		DZ.login(function(response) {
 			if (response.authResponse) {
-				console.log(LOGNS, 'logged');
-				$scope.logged();
+				console.log(LOGNS, 'successfully logged in with Token ', response.authResponse.accessToken);
+				$scope.account.accessToken = response.authResponse.accessToken;
+				$scope.account.expire = response.authResponse.expire;
+				$scope.account.userID = response.userID;				
+				createAccount();
 			} else {
-				console.log(LOGNS, 'not logged');
+				console.log(LOGNS, 'login aborded by user');
+				$scope.login = false;
 			}
-		}, {scope: 'manage_library,basic_access'});
+		}, {scope: 'basic_access,email,offline_access,manage_library'});
 	};
 
-	$scope.logged = function() {
-		$scope.logged = true;
-		console.log(LOGNS, 'Player loaded');
-		//$('#controls').css('opacity', 1);
+	$scope.logout = function() {
+		console.log(LOGNS, 'logout clicked');
+	};	
+	
+	// save the account after login
+	function createAccount() {
+		$http.post('/api/accounts', $scope.account)
+			.success(function(data) {
+				console.log(LOGNS, 'Account saved to database', data);
+				$scope.login = true;
+			})
+			.error(function(data) {
+				console.log(LOGNS, 'Error while saving account: ' + data);
+				$scope.login = false;
+			});
 	};
 
-	// --------------------------------------------------- DZ events
-	/*
-	DZ.Event.subscribe('player_loaded', function(){
-		console.log(LOGNS, 'check login...');
-
-		DZ.getLoginStatus(function(response) {
-			if (response.authResponse) {
-				console.log(LOGNS, 'check login: logged');
-				$scope.logged();
-			} else {
-				console.log(LOGNS, 'check login: not logged');
-				$scope.view = 'login';
-			}
-			$scope.$apply();
-		}, {scope: 'manage_library,basic_access'});
-	});
-	*/
+	// delete the account after logout
+	function deleteAccount(id) {
+		$http.delete('/api/accounts/' + id)
+			.success(function(data) {
+				$scope.account = { };
+				console.log(LOGNS, 'Account successfully deleted', data);
+				$scope.login = false;
+			})
+			.error(function(data) {
+				console.log(LOGNS, 'Error while deleting account: ' + data);
+			});
+	};	
 });
