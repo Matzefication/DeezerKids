@@ -24,42 +24,15 @@
 <body ng-controller="mainController">
     <div class="container">
 
-        <!-- HEADER AND TODO COUNT -->
-        <div class="jumbotron text-center">
-            <h1>I'm a Todo-aholic <span class="label label-info">{{ accounts.length }}</span></h1>
-        </div>
-
-        <!-- TODO LIST -->
-        <div id="todo-list" class="row">
-            <div class="col-sm-4 col-sm-offset-4">
-
-                <!-- LOOP OVER THE TODOS IN $scope.todos -->
-                <div class="checkbox" ng-repeat="account in accounts">
-                    <label>
-                        <input type="checkbox" ng-click="deleteAccount(account._id)"> {{ account.accessToken }}
-                    </label>
-                </div>
-
-            </div>
-        </div>
-
-        <!-- FORM TO CREATE TODOS -->
-        <div id="account-form" class="row">
-            <div class="col-sm-8 col-sm-offset-2 text-center">
-                <form>
-                    <div class="form-group">
-
-                        <!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
-                        <input type="text" class="form-control input-lg text-center" placeholder="I want to buy a puppy that will love me forever" ng-model="formData.text">
-                    </div>
-
-                    <!-- createToDo() WILL CREATE NEW TODOS -->
-                    <button type="submit" class="btn btn-primary btn-lg" ng-click="createAccount()">Add</button>
-                </form>
-            </div>
-        </div>
+	<!-- Login to Deezer account -->
+	<div ng-show="view == 'login'" class="jumbotron text-center">
+		<h1>Um DeezerKids zu aktivieren melden Sie sich einfach mit Ihrem Deezer-Account an.</h1>
+		<div class="loader_content"><a class="login_link" ng-click="login()">Jetzt anmelden</a></div>
+		<span class="label label-info">{{ accounts.length }}</span>
+	</div>
 
     </div>
 
+    <script src="http://cdn-files.deezer.com/js/min/dz.js"></script>
 </body>
 </html>
