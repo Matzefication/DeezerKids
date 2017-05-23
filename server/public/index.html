@@ -27,13 +27,13 @@
 	<!-- Login to Deezer account -->
 	<div ng-show="login == false" class="jumbotron text-center">
 		<h1>Um DeezerKids zu aktivieren melden Sie sich einfach mit Ihrem Deezer-Account an.</h1>
-		<div class="loader_content"><a class="login_link" ng-click="login()">Jetzt anmelden</a></div>
+		<div class="loader_content"><a class="login_link" ng-click="doLogin()">Jetzt anmelden</a></div>
 	</div>
 
 	<!-- Already loggedin to Deezer -->
 	<div ng-show="login == true" class="jumbotron text-center">
 		<h1>DeezerKids ist bereits aktiviert, Sie sind mit Ihrem Deezer-Account {{ account.userID }} angemeldet.</h1>
-		<div class="loader_content"><a class="logout_link" ng-click="logout()">Ich möchte mich wieder abmelden</a></div>
+		<div class="loader_content"><a class="logout_link" ng-click="doLogout()">Ich möchte mich wieder abmelden</a></div>
 	</div>	    
 	    
     </div>
