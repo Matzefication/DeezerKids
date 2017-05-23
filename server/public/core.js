@@ -1,4 +1,4 @@
-var LOGNS = 'DeezerKids ::';
+var LOGNS = 'DeezerKids:';
 var APP_ID = '236482';
 var CHANNEL_URL = 'http://www.beup2date.com/DeezerKids/channel.html';
 
@@ -80,20 +80,8 @@ DeezerKids.controller("AppController", function($scope, $route, $routeParams, $l
 		$scope.handleRoute();
 	};
 
-	// --------------------------------------------------- Angular events
-
-	$scope.$on("$routeChangeSuccess", function($currentRoute, $previousRoute) {
-		if ($scope.logged) {
-			if ($route.current.action !== 'search') {
-				$scope.last_path = $location.path(); // when empty search go to this
-			}
-
-			$scope.handleRoute();
-		}
-	});
-
 	// --------------------------------------------------- DZ events
-
+	/*
 	DZ.Event.subscribe('player_loaded', function(){
 		console.log(LOGNS, 'check login...');
 
@@ -108,4 +96,5 @@ DeezerKids.controller("AppController", function($scope, $route, $routeParams, $l
 			$scope.$apply();
 		}, {scope: 'manage_library,basic_access'});
 	});
+	*/
 });
