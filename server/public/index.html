@@ -31,25 +31,13 @@
 		</div>	    
 
 	</div>
-
 	
 	<!-- jQuery + Angular.js -->
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 	
-	<!-- The app itself -->
-    	<script src="core.js"></script>
-	
 	<!-- Firebase -->
 	<script src="https://www.gstatic.com/firebasejs/4.0.0/firebase.js"></script>
-
-	<!-- AngularFire API -->
-	<script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>	
-	
-	<!-- Deezer SDK -->
-	<div id="dz-root"></div>	
-	<script src="http://cdn-files.deezer.com/js/min/dz.js"></script>
-	
 	<script>
 	  // Initialize Firebase
 	  var config = {
@@ -61,6 +49,16 @@
 	    messagingSenderId: "574546022642"
 	  };
 	  firebase.initializeApp(config);
-	</script>	
+	</script>
+	
+	<!-- AngularFire API -->
+	<script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>	
+	
+	<!-- Deezer SDK -->
+	<div id="dz-root"></div>	
+	<script src="http://cdn-files.deezer.com/js/min/dz.js"></script>
+
+	<!-- The app itself -->
+    	<script src="core.js"></script>	
 </body>
 </html>
