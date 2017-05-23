@@ -39,7 +39,7 @@ DeezerKids.controller("AppController", function($scope, $route, $routeParams, $l
 
 	// --------------------------------------------------- Methods
 
-	$scope.login = function() {
+	$scope.doLogin = function() {
 		console.log(LOGNS, 'login clicked');
 
 		DZ.login(function(response) {
@@ -56,7 +56,7 @@ DeezerKids.controller("AppController", function($scope, $route, $routeParams, $l
 		}, {scope: 'basic_access,email,offline_access,manage_library'});
 	};
 
-	$scope.logout = function() {
+	$scope.doLogout = function() {
 		console.log(LOGNS, 'logout clicked');
 	};	
 	
