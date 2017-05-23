@@ -40,6 +40,16 @@ DeezerKids.controller("AppController", function($scope, $route, $routeParams, $l
 	// --------------------------------------------------- Methods
 
 	$scope.doLogin = function() {
+		$http.get('http://beup2date.com/DeezerKids/devices/123')
+			.success(function(data) {
+				console.log(LOGNS, data);
+			})
+			.error(function(data) {
+				console.log(LOGNS, 'Error: ' + data);
+			});		
+	};
+	
+	$scope.doLogin2 = function() {
 		console.log(LOGNS, 'login clicked');
 
 		DZ.login(function(response) {
