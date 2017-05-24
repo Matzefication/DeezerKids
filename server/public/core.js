@@ -38,12 +38,12 @@ DeezerKids.controller('AppController', function($scope, $rootScope, $http) {
 	// STEP3: connect to Deezer account
 	//////////////////////////////////////////////////////
 	$scope.connectAccount = function() {
-		$http.get('http://beup2date.com/DeezerKids/devices/123')
-			.success(function(data) {
-				console.log(LOGNS, data);
-			})
-			.error(function(data) {
-				console.log(LOGNS, 'Error: ' + data);
+		$http.get('http://beup2date.com/DeezerKids/devices/123').then
+			function(result) {
+				console.log(LOGNS, result);
+			},
+			function(error) {
+				console.log(LOGNS, 'Error: ' + error);
 			});	
 	};
 	
@@ -64,14 +64,14 @@ DeezerKids.controller('AppController', function($scope, $rootScope, $http) {
 	// STEP5: save account data to mongodb
 	//////////////////////////////////////////////////////
 	$scope.saveAccount = function() {
-		$http.post('/api/accounts', $scope.account)
-			.success(function(data) {
-				console.log(LOGNS, 'Account saved to database', data);
-				$scope.login = true;
-			})
-			.error(function(data) {
-				console.log(LOGNS, 'Error while saving account: ' + data);
-				$scope.login = false;
+		$http.post('/api/accounts', $scope.account).then
+			function(result) {
+				console.log(LOGNS, 'Account saved to database', result);
+				$scope.completed = true;
+			},
+			function(error) {
+				console.log(LOGNS, 'Error while saving account: ' + error);
+				$scope.completed = false;
 			});
 	};
 	
