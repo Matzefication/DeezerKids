@@ -5,51 +5,95 @@ var CHANNEL_URL = 'http://www.beup2date.com/DeezerKids/channel.html';
 var DeezerKids = angular.module('DeezerKids', []);
 
 DeezerKids.controller('AppController', function($scope, $rootScope, $http) {
-    
-	// Init config
-	$scope.login = false;
-
-	// when landing on the page, get all accounts and show them
-	$http.get('/api/accounts')
+	
+	//////////////////////////////////////////////////////
+	// STEP1: check if device setup already completed
+	//////////////////////////////////////////////////////
+	$scope.completed = false;
+	$scope.step = 1;
+	$http.get('/api/account')
 		.success(function(data) {
-			if (data.length == 1) {
-				console.log(LOGNS, 'Account already loggedin');
-				$scope.account = data[0];
-				$scope.login = true;
+			if (data) {
+				console.log(LOGNS, 'DeezerKids setup already completed');
+				$scope.account = data;
+				$scope.completed = true;
 			} else {
-				console.log(LOGNS, 'Account not loggedin yet');
-				$scope.login = false;
+				console.log(LOGNS, 'Starting DeezerKids setup');
+				$scope.completed = false;
+				$scope.step = 2;
 			}
 			console.log(LOGNS, data);
 		})
 		.error(function(data) {
 			console.log(LOGNS, 'Error: ' + data);
-		});
+		});	
 
-	// Global for test purpose
-	rootScope = $rootScope;
-	scope = $scope;
-
-	DZ.init({
-		appId: APP_ID,
-		channelUrl: CHANNEL_URL
-	});
+	//////////////////////////////////////////////////////
+	// STEP2: setup WLAN connection
+	//////////////////////////////////////////////////////
+	$scope.setupWLAN = function() {
+	};
 	
-	console.log(LOGNS, 'Deezer-API initialiazed successfully');
-
-	// --------------------------------------------------- Methods
-
-	$scope.doLogin = function() {
+	//////////////////////////////////////////////////////
+	// STEP3: connect to Deezer account
+	//////////////////////////////////////////////////////
+	$scope.connectAccount = function() {
 		$http.get('http://beup2date.com/DeezerKids/devices/123')
 			.success(function(data) {
 				console.log(LOGNS, data);
 			})
 			.error(function(data) {
 				console.log(LOGNS, 'Error: ' + data);
-			});		
+			});	
 	};
 	
-	$scope.doLogin2 = function() {
+	//////////////////////////////////////////////////////
+	// STEP4: select playlist from Deezer account
+	//////////////////////////////////////////////////////
+	$scope.selectPlaylist = function() {
+		DZ.init({
+			appId: APP_ID,
+			channelUrl: CHANNEL_URL
+		});	
+		console.log(LOGNS, 'Deezer-API initialiazed successfully');
+
+		console.log(LOGNS, 'login clicked');	
+	};
+
+	//////////////////////////////////////////////////////
+	// STEP5: save account data to mongodb
+	//////////////////////////////////////////////////////
+	$scope.saveAccount = function() {
+		$http.post('/api/accounts', $scope.account)
+			.success(function(data) {
+				console.log(LOGNS, 'Account saved to database', data);
+				$scope.login = true;
+			})
+			.error(function(data) {
+				console.log(LOGNS, 'Error while saving account: ' + data);
+				$scope.login = false;
+			});
+	};
+	
+	//////////////////////////////////////////////////////
+	// COMPLETED: setup already completed
+	//////////////////////////////////////////////////////
+	$scope.deleteAccount = function deleteAccount() {
+		$http.delete('/api/account')
+			.success(function(data) {
+				$scope.account = { };
+				console.log(LOGNS, 'Account successfully deleted', data);
+				$scope.login = false;
+			})
+			.error(function(data) {
+				console.log(LOGNS, 'Error while deleting account: ' + data);
+			});
+	};		
+
+
+	// --------------------------------------------------- Methods
+
+	$scope.doLogin = function() {
 		console.log(LOGNS, 'login clicked');
 
 		DZ.login(function(response) {
@@ -65,34 +109,4 @@ DeezerKids.controller('AppController', function($scope, $rootScope, $http) {
 			}
 		}, {scope: 'basic_access,email,offline_access,manage_library'});
 	};
-
-	$scope.doLogout = function() {
-		console.log(LOGNS, 'logout clicked');
-	};	
-	
-	// save the account after login
-	function createAccount() {
-		$http.post('/api/accounts', $scope.account)
-			.success(function(data) {
-				console.log(LOGNS, 'Account saved to database', data);
-				$scope.login = true;
-			})
-			.error(function(data) {
-				console.log(LOGNS, 'Error while saving account: ' + data);
-				$scope.login = false;
-			});
-	};
-
-	// delete the account after logout
-	function deleteAccount(id) {
-		$http.delete('/api/accounts/' + id)
-			.success(function(data) {
-				$scope.account = { };
-				console.log(LOGNS, 'Account successfully deleted', data);
-				$scope.login = false;
-			})
-			.error(function(data) {
-				console.log(LOGNS, 'Error while deleting account: ' + data);
-			});
-	};	
 });
