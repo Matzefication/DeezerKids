@@ -7,16 +7,21 @@
     var methodOverride = require('method-override');  // simulate DELETE and PUT (express4)
 
     // configuration =================
-    console.log("Deezer.Kids connecting to local database");
-    mongoose.connect('mongodb://127.0.0.1/DeezerKids');     // connect to mongoDB database
+    console.log("DeezerKids connecting to local database");
+    mongoose.connect('mongodb://localhost/DeezerKids');     // connect to mongoDB database
 
     var db = mongoose.connection;
-    db.on('error', console.error.bind(console, 'connection error:'));
+
+    db.on('error', function() {
+        console.error.bind(console, 'connection error:');
+    });
+
     db.once('open', function() {
-        console.log("Deezer.Kids succesful connect to database");
+        console.log("DeezerKids succesful connected to database");
         // we're connected!
         // define model =================
         var DeezerAccount = mongoose.model('DeezerAccount', {
+            active: Boolean,
             accessToken: String,
             expire: String,
             userID: String
@@ -31,55 +36,47 @@
 
         // routes ---------------------------------------------------------------------
         // get all stored accounts
-        app.get('/api/accounts', function(req, res) {
-
+        app.get('/api/account', function(req, res) {
             // use mongoose to get all accounts in the database
-            DeezerAccount.find(function(err, accounts) {
-
+            DeezerAccount.findOne(function(err, account) {
                 // if there is an error retrieving, send the error. nothing after res.send(err) will execute
                 if (err)
                     res.send(err)
-
-                res.json(accounts); // return all accounts in JSON format
+                res.json(account); // return all accounts in JSON format
             });
         });
 
         // create account and send back all accounts after creation
-        app.post('/api/accounts', function(req, res) {
-
-            // create a account, information comes from AJAX request from Angular
+        app.post('/api/account', function(req, res) {
+            // delete existing entries (there should only be one at same time)
+            DeezerAccount.deleteMany();
+            
+            // create an account, information comes from AJAX request from Angular
             DeezerAccount.create({
-                accessToken : req.body.text,
-                expire : '12345',
-                userID : 'Matzefication'
+                active : true,
+                accessToken : req.accessToken,
+                expire : req.expire,
+                userID : req.userID
             }, function(err, account) {
                 if (err)
                     res.send(err);
 
                 // get and return all the accounts after you create another
-                DeezerAccount.find(function(err, accounts) {
+                DeezerAccount.findOne(function(err, account) {
+                    // if there is an error retrieving, send the error. nothing after res.send(err) will execute
                     if (err)
                         res.send(err)
-                    res.json(accounts);
+                    res.json(account); // return all accounts in JSON format
                 });
             });
 
         });
 
         // delete a account
-        app.delete('/api/accounts/:account_id', function(req, res) {
-            DeezerAccount.remove({
-                _id : req.params.account_id
-            }, function(err, account) {
+        app.delete('/api/account', function(req, res) {
+            DeezerAccount.remove(function(err, account) {
                 if (err)
                     res.send(err);
-
-                // get and return all the todos after you create another
-                DeezerAccount.find(function(err, accounts) {
-                    if (err)
-                        res.send(err)
-                    res.json(accounts);
-                });
             });
         });
 
