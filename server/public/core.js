@@ -38,7 +38,7 @@ DeezerKids.controller('AppController', function($scope, $rootScope, $http) {
 	// STEP3: connect to Deezer account
 	//////////////////////////////////////////////////////
 	$scope.connectAccount = function() {
-		$http.get('http://beup2date.com/DeezerKids/devices/123').then
+		$http.get('http://beup2date.com/DeezerKids/devices/123').then(
 			function(result) {
 				console.log(LOGNS, result);
 			},
@@ -64,7 +64,7 @@ DeezerKids.controller('AppController', function($scope, $rootScope, $http) {
 	// STEP5: save account data to mongodb
 	//////////////////////////////////////////////////////
 	$scope.saveAccount = function() {
-		$http.post('/api/accounts', $scope.account).then
+		$http.post('/api/accounts', $scope.account).then(
 			function(result) {
 				console.log(LOGNS, 'Account saved to database', result);
 				$scope.completed = true;
