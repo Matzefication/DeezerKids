@@ -12,15 +12,15 @@ DeezerKids.controller('AppController', function($scope, $rootScope, $http) {
 	$scope.completed = false;
 	$scope.step = 1;
 	$http.get('/api/account').then(
-		function(data) {
-			if (data != null) {
-				console.log(LOGNS, 'DeezerKids setup already completed');
-				$scope.account = data;
-				$scope.completed = true;
-			} else {
+		function(result) {
+			if (result.data == null) {
 				console.log(LOGNS, 'Starting DeezerKids setup');
 				$scope.completed = false;
 				$scope.step = 2;
+			} else {
+				console.log(LOGNS, 'DeezerKids setup already completed');
+				$scope.account = data;
+				$scope.completed = true;
 			}
 			console.log(LOGNS, data);
 		},
