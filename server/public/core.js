@@ -19,10 +19,10 @@ DeezerKids.controller('AppController', function($scope, $rootScope, $http) {
 				$scope.step = 2;
 			} else {
 				console.log(LOGNS, 'DeezerKids setup already completed');
-				$scope.account = data;
+				$scope.account = result;
 				$scope.completed = true;
 			}
-			console.log(LOGNS, data);
+			console.log(LOGNS, result);
 		},
 		function(error) {
 			console.log(LOGNS, 'Error: ' + error);
@@ -80,9 +80,9 @@ DeezerKids.controller('AppController', function($scope, $rootScope, $http) {
 	//////////////////////////////////////////////////////
 	$scope.deleteAccount = function deleteAccount() {
 		$http.delete('/api/account').then(
-			function(data) {
+			function(result) {
 				$scope.account = { };
-				console.log(LOGNS, 'Account successfully deleted', data);
+				console.log(LOGNS, 'Account successfully deleted');
 				$scope.login = false;
 			},
 			function(error) {
