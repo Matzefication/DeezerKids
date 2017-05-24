@@ -1,4 +1,5 @@
     // set up ========================
+    var LOGNS = 'DeezerKids:';
     var express = require('express');
     var app = express();                              // create our app w/ express
     var mongoose = require('mongoose');               // mongoose for mongodb
