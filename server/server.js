@@ -8,7 +8,7 @@
     var methodOverride = require('method-override');  // simulate DELETE and PUT (express4)
 
     // configuration =================
-    console.log("DeezerKids connecting to local database");
+    console.log(LOGNS, "connecting to local database");
     mongoose.connect('mongodb://localhost/DeezerKids');     // connect to mongoDB database
 
     var db = mongoose.connection;
@@ -18,7 +18,7 @@
     });
 
     db.once('open', function() {
-        console.log("DeezerKids succesful connected to database");
+        console.log(LOGNS, "succesful connected to database");
         // we're connected!
         // define model =================
         var DeezerAccount = mongoose.model('DeezerAccount', {
@@ -88,5 +88,5 @@
 
         // listen (start app with node server.js) ======================================
         app.listen(8000);
-        console.log("Deezer.Kids listening on port 8000");
+        console.log(LOGNS, "listening on port 8000");
     });
