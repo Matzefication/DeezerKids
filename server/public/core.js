@@ -11,8 +11,8 @@ DeezerKids.controller('AppController', function($scope, $rootScope, $http) {
 	//////////////////////////////////////////////////////
 	$scope.completed = false;
 	$scope.step = 1;
-	$http.get('/api/account')
-		.success(function(data) {
+	$http.get('/api/account').then(
+		function(data) {
 			if (data) {
 				console.log(LOGNS, 'DeezerKids setup already completed');
 				$scope.account = data;
@@ -23,8 +23,8 @@ DeezerKids.controller('AppController', function($scope, $rootScope, $http) {
 				$scope.step = 2;
 			}
 			console.log(LOGNS, data);
-		})
-		.error(function(data) {
+		},
+		function(data) {
 			console.log(LOGNS, 'Error: ' + data);
 		});	
 
