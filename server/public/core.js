@@ -7,6 +7,17 @@ var DeezerKids = angular.module('DeezerKids', []);
 DeezerKids.controller('AppController', function($scope, $rootScope, $http) {
 	
 	//////////////////////////////////////////////////////
+	// TEST TEST TEST TEST TEST
+	//////////////////////////////////////////////////////
+	$http.get('http://beup2date.com/DeezerKids/devices/newID').then(
+		function(result) {
+			console.log(LOGNS, result);
+		},
+		function(error) {
+			console.log(LOGNS, 'Error: ' + error);
+		});	
+	
+	//////////////////////////////////////////////////////
 	// STEP1: check if device setup already completed
 	//////////////////////////////////////////////////////
 	$scope.completed = false;
