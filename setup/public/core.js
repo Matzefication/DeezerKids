@@ -7,40 +7,6 @@ DeezerKids.controller('AppController', function($scope, $rootScope, $http, $fire
 	
 	$scope.completed = false;	// Setup not yet completed
 
-	function checkConnectivity() {
-		var ref = firebase.database().ref();
-	};
-	
-	function checkDeviceID() {
-		$http.get('/api/device').then(
-			function(result) {
-				if (result.data == null) {
-					console.log(LOGNS, 'Creating Device-ID');
-					// ToDo create device-id from firebase and save to internal mongoDB
-					$scope.device.id = '123456';
-					$http.post('/api/device', $scope.device).then(
-						function(result) {
-							console.log(LOGNS, 'Device saved to database', result);
-							return true;
-						},
-						function(error) {
-							console.log(LOGNS, 'Error while saving device: ' + error);
-							return false;
-						});
-
-					$scope.connectAccount();				
-				} else {
-					console.log(LOGNS, 'Device-ID already set');
-					$scope.device = result;
-					return true;
-				}
-			},
-			function(error) {
-				console.log(LOGNS, 'Error: ' + error);
-				return false;
-			});
-	};
-	
 	function connectAccount() {
 		DZ.init({
 			appId: APP_ID,
@@ -62,6 +28,40 @@ DeezerKids.controller('AppController', function($scope, $rootScope, $http, $fire
 		}, {scope: 'basic_access,email,offline_access,manage_library'});		
 	};	
 
+	
+	function checkDeviceID() {
+		$http.get('/api/device').then(
+			function(result) {
+				if (result.data == null) {
+					console.log(LOGNS, 'Creating Device-ID');
+					// ToDo create device-id from firebase and save to internal mongoDB
+					$scope.device.id = '123456';
+					$http.post('/api/device', $scope.device).then(
+						function(result) {
+							console.log(LOGNS, 'Device saved to database', result);
+							connectAccount();
+						},
+						function(error) {
+							console.log(LOGNS, 'Error while saving device: ' + error);
+						});
+
+					$scope.connectAccount();				
+				} else {
+					console.log(LOGNS, 'Device-ID already set');
+					$scope.device = result;
+					connectAccount();
+				}
+			},
+			function(error) {
+				console.log(LOGNS, 'Error: ' + error);
+			});
+	};
+	
+	function checkConnectivity() {
+		var ref = firebase.database().ref();
+		checkDeviceID();
+	};
+	
 	function deleteAccount() {
 		$http.delete('/api/account').then(
 			function(result) {
@@ -81,12 +81,11 @@ DeezerKids.controller('AppController', function($scope, $rootScope, $http, $fire
 	//////////////////////////////////////////////////////
 	// STEP 2: check connectivity and connect to firebase
 	//////////////////////////////////////////////////////
-	checkDeviceID();
+	checkConnectivity();
 	
 	//////////////////////////////////////////////////////
 	// STEP 3: check device id
 	//////////////////////////////////////////////////////	
-	connectAccount();
 	
 	//////////////////////////////////////////////////////
 	// STEP4: connect to Deezer account
