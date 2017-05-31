@@ -6,43 +6,67 @@ var DeezerKids = angular.module('DeezerKids', ["firebase"]);
 DeezerKids.controller('AppController', function($scope, $rootScope, $http, $firebaseObject) {
 	
 	$scope.completed = false;	// Setup not yet completed
+	$scope.checkWLAN();		// Setup starten
 	
 	//////////////////////////////////////////////////////
 	// STEP 1: check WLAN settings
 	//////////////////////////////////////////////////////
-	$scope.step = 1;
+	$scope.checkWLAN = function() {
+		$scope.step = 1;
+	};
 	
 	//////////////////////////////////////////////////////
 	// STEP 2: check connectivity and connect to firebase
-	//////////////////////////////////////////////////////	
-	$scope.step = 2;
-	var ref = firebase.database().ref();
+	//////////////////////////////////////////////////////
+	$scope.checkConnectivity = function() {
+		$scope.step = 2;
+		
+		var ref = firebase.database().ref();
+		$scope.checkDeviceID();
+	};
 
 	//////////////////////////////////////////////////////
 	// STEP 3: check device id
 	//////////////////////////////////////////////////////	
-	$scope.step = 3;
-	$http.get('/api/account').then(
-		function(result) {
-			if (result.data == null) {
-				console.log(LOGNS, 'Creating Device-ID');
-				$scope.connectAccount();				
-			} else {
-				console.log(LOGNS, 'Device-ID already set');
-				$scope.account = result;
-			}
-		},
-		function(error) {
-			console.log(LOGNS, 'Error: ' + error);
-		});	
+	$scope.checkDeviceID = function() {
+		$scope.step = 3;
+		
+		$http.get('/api/device').then(
+			function(result) {
+				if (result.data == null) {
+					console.log(LOGNS, 'Creating Device-ID');
+					// ToDo create device-id from firebase and save to internal mongoDB
+					$scope.device.id = '123456';
+					$http.post('/api/device', $scope.device).then(
+						function(result) {
+							console.log(LOGNS, 'Device saved to database', result);
+							$scope.completed = true;
+						},
+						function(error) {
+							console.log(LOGNS, 'Error while saving device: ' + error);
+							$scope.completed = false;
+						});
+					
+					$scope.connectAccount();				
+				} else {
+					console.log(LOGNS, 'Device-ID already set');
+					$scope.device = result;
+				}
+			},
+			function(error) {
+				console.log(LOGNS, 'Error: ' + error);
+			});
+	};
 	
 	//////////////////////////////////////////////////////
 	// STEP4: connect to Deezer account
 	//////////////////////////////////////////////////////
 	$scope.connectAccount = function() {
+		$scope.step = 4;
+		
 		DZ.init({
 			appId: APP_ID,
-			channelUrl: 'http://www.beup2date.com/DeezerKids/devices/' + $scope.deviceid + '/setAccessToken'
+			channelUrl: 'http://www.beup2date.com/DeezerKids/devices/' + $scope.device.id + '/setAccessToken'
 		});
 		console.log(LOGNS, 'Deezer-API initialiazed successfully');
 		
@@ -61,25 +85,17 @@ DeezerKids.controller('AppController', function($scope, $rootScope, $http, $fire
 	};
 	
 	//////////////////////////////////////////////////////
-	// STEP4: select playlist from Deezer account
+	// STEP5: select playlist from Deezer account
 	//////////////////////////////////////////////////////
 	$scope.selectPlaylist = function() {
-
+		$scope.step = 5;
 	};
 
 	//////////////////////////////////////////////////////
-	// STEP5: save account data to mongodb
+	// STEP6: save account data to firebase
 	//////////////////////////////////////////////////////
 	$scope.saveAccount = function() {
-		$http.post('/api/accounts', $scope.account).then(
-			function(result) {
-				console.log(LOGNS, 'Account saved to database', result);
-				$scope.completed = true;
-			},
-			function(error) {
-				console.log(LOGNS, 'Error while saving account: ' + error);
-				$scope.completed = false;
-			});
+		$scope.step = 6;
 	};
 	
 	//////////////////////////////////////////////////////
