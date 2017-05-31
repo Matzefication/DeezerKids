@@ -6,15 +6,13 @@ var DeezerKids = angular.module('DeezerKids', ["firebase"]);
 DeezerKids.controller('AppController', function($scope, $rootScope, $http, $firebaseObject) {
 	
 	$scope.completed = false;	// Setup not yet completed
-	$scope.checkWLAN();		// Setup starten
-	
+
 	//////////////////////////////////////////////////////
 	// STEP 1: check WLAN settings
 	//////////////////////////////////////////////////////
-	$scope.checkWLAN = function() {
-		$scope.step = 1;
-	};
-	
+	$scope.step = 1;
+	$scope.checkConnectivity();
+
 	//////////////////////////////////////////////////////
 	// STEP 2: check connectivity and connect to firebase
 	//////////////////////////////////////////////////////
