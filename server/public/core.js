@@ -9,7 +9,7 @@ DeezerKids.controller('AppController', function($scope, $rootScope, $http) {
 	//////////////////////////////////////////////////////
 	// TEST TEST TEST TEST TEST
 	//////////////////////////////////////////////////////
-	$http.get('http://beup2date.com/DeezerKids/devices/newID').then(
+	$http.post('http://beup2date.com/DeezerKids/devices').then(
 		function(result) {
 			console.log(LOGNS, result);
 		},
