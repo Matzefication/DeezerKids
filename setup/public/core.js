@@ -7,28 +7,11 @@ DeezerKids.controller('AppController', function($scope, $rootScope, $http, $fire
 	
 	$scope.completed = false;	// Setup not yet completed
 
-	//////////////////////////////////////////////////////
-	// STEP 1: check WLAN settings
-	//////////////////////////////////////////////////////
-	$scope.step = 1;
-	$scope.checkConnectivity();
-
-	//////////////////////////////////////////////////////
-	// STEP 2: check connectivity and connect to firebase
-	//////////////////////////////////////////////////////
-	$scope.checkConnectivity = function() {
-		$scope.step = 2;
-		
+	function checkConnectivity() {
 		var ref = firebase.database().ref();
-		$scope.checkDeviceID();
 	};
-
-	//////////////////////////////////////////////////////
-	// STEP 3: check device id
-	//////////////////////////////////////////////////////	
-	$scope.checkDeviceID = function() {
-		$scope.step = 3;
-		
+	
+	function checkDeviceID() {
 		$http.get('/api/device').then(
 			function(result) {
 				if (result.data == null) {
@@ -38,30 +21,27 @@ DeezerKids.controller('AppController', function($scope, $rootScope, $http, $fire
 					$http.post('/api/device', $scope.device).then(
 						function(result) {
 							console.log(LOGNS, 'Device saved to database', result);
-							$scope.completed = true;
+							return true;
 						},
 						function(error) {
 							console.log(LOGNS, 'Error while saving device: ' + error);
-							$scope.completed = false;
+							return false;
 						});
-					
+
 					$scope.connectAccount();				
 				} else {
 					console.log(LOGNS, 'Device-ID already set');
 					$scope.device = result;
+					return true;
 				}
 			},
 			function(error) {
 				console.log(LOGNS, 'Error: ' + error);
+				return false;
 			});
 	};
 	
-	//////////////////////////////////////////////////////
-	// STEP4: connect to Deezer account
-	//////////////////////////////////////////////////////
-	$scope.connectAccount = function() {
-		$scope.step = 4;
-		
+	function connectAccount() {
 		DZ.init({
 			appId: APP_ID,
 			channelUrl: 'http://www.beup2date.com/DeezerKids/devices/' + $scope.device.id + '/setAccessToken'
@@ -80,26 +60,9 @@ DeezerKids.controller('AppController', function($scope, $rootScope, $http, $fire
 				$scope.login = false;
 			}
 		}, {scope: 'basic_access,email,offline_access,manage_library'});		
-	};
-	
-	//////////////////////////////////////////////////////
-	// STEP5: select playlist from Deezer account
-	//////////////////////////////////////////////////////
-	$scope.selectPlaylist = function() {
-		$scope.step = 5;
-	};
+	};	
 
-	//////////////////////////////////////////////////////
-	// STEP6: save account data to firebase
-	//////////////////////////////////////////////////////
-	$scope.saveAccount = function() {
-		$scope.step = 6;
-	};
-	
-	//////////////////////////////////////////////////////
-	// COMPLETED: setup already completed
-	//////////////////////////////////////////////////////
-	$scope.deleteAccount = function deleteAccount() {
+	function deleteAccount() {
 		$http.delete('/api/account').then(
 			function(result) {
 				$scope.account = { };
@@ -110,4 +73,36 @@ DeezerKids.controller('AppController', function($scope, $rootScope, $http, $fire
 				console.log(LOGNS, 'Error while deleting account: ' + error);
 			});
 	};
+	
+	//////////////////////////////////////////////////////
+	// STEP 1: check WLAN settings
+	//////////////////////////////////////////////////////
+
+	//////////////////////////////////////////////////////
+	// STEP 2: check connectivity and connect to firebase
+	//////////////////////////////////////////////////////
+	if checkDeviceID() {
+		connectAccount();
+	}
+	
+	//////////////////////////////////////////////////////
+	// STEP 3: check device id
+	//////////////////////////////////////////////////////	
+	
+	//////////////////////////////////////////////////////
+	// STEP4: connect to Deezer account
+	//////////////////////////////////////////////////////
+	
+	//////////////////////////////////////////////////////
+	// STEP5: select playlist from Deezer account
+	//////////////////////////////////////////////////////
+
+	//////////////////////////////////////////////////////
+	// STEP6: save account data to firebase
+	//////////////////////////////////////////////////////
+	
+	//////////////////////////////////////////////////////
+	// COMPLETED: setup already completed
+	//////////////////////////////////////////////////////
+
 });
