@@ -26,14 +26,11 @@ DeezerKids.controller('AppController', function($scope, $rootScope, $http, $fire
 		function(result) {
 			if (result.data == null) {
 				console.log(LOGNS, 'Creating Device-ID');
-				$scope.completed = false;
-				$scope.step = 2;
+				$scope.connectAccount();				
 			} else {
 				console.log(LOGNS, 'Device-ID already set');
 				$scope.account = result;
-				$scope.completed = true;
 			}
-			console.log(LOGNS, result);
 		},
 		function(error) {
 			console.log(LOGNS, 'Error: ' + error);
