@@ -2,6 +2,8 @@ var async               = require("async"),
     wifi_manager        = require("./helper/wifi_manager")(),
     dependency_manager  = require("./helper/dependency_manager")(),
     
+    logger              = require("./helper/logger")(),
+    
     express             = require('express'),
     app                 = express(),
     mongoose            = require('mongoose'),
