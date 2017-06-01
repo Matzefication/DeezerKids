@@ -5,8 +5,7 @@
   "main": "setup.js",
   "scripts": {
     "provision": "apt-get update -y && apt-get install isc-dhcp-server hostapd iw -y",
-    "install": "sudo npm run-script provision",
-    "update": "sudo npm run-script provision"
+    "install": "sudo npm run-script provision"
   },
   "repository": {
     "type": "git",
