@@ -5,7 +5,8 @@
   "main": "main.js",
   "scripts": {
     "start": "sh run-start.sh",
-    "install": "cd setup && npm install && sudo npm run-script provision"
+    "install": "cd setup && npm install",
+    "update": "cd setup && npm update"
   },
   "repository": {
     "type": "git",
