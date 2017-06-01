@@ -115,10 +115,10 @@ async.series([
     function test_is_wifi_enabled(next_step) {
         wifi_manager.is_wifi_enabled(function(error, result_ip) {
             if (result_ip) {
-                logger.info("\nWifi is enabled, and IP " + result_ip + " assigned");
+                logger.info("Wifi is enabled, and IP " + result_ip + " assigned");
                 // process.exit(0);
             } else {
-                logger.info("\nWifi is not enabled, Enabling AP for self-configure");
+                logger.info("Wifi is not enabled, Enabling AP for self-configure");
             }
             next_step(error);
         });
