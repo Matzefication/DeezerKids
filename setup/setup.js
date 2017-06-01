@@ -37,9 +37,9 @@ async.series([
         mongoose.connect('mongodb://localhost/DeezerKids');
         var db = mongoose.connection;
 
-        db.on('error', function() {
-            console.error.bind(console, LOGNS + 'connection error:');
-        });
+        //db.on('error', function() {
+        //    console.error.bind(console, LOGNS + 'connection error:');
+        //});
 
         db.once('open', function() {
             console.log(LOGNS, "succesfully connected to database");
