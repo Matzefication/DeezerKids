@@ -11,8 +11,8 @@ var async               = require("async"),
     bodyParser          = require('body-parser'),
     methodOverride      = require('method-override'),
     
-    config              = require("./config.json"),   
-    LOGNS               = 'DeezerKids:';
+    config              = require("./config.json"),
+    device              = {};
 
 async.series([
     /////////////////////////////////////////////////////////////////////
@@ -38,13 +38,13 @@ async.series([
         var db = mongoose.connection;
 
         db.on('error', function() {
-            console.error.bind(console, LOGNS + 'connection error:');
+            logger.error("Mongo-DB connection error");
         });
 
         db.once('open', function() {
             logger.success("succesfully connected to database");
 
-            var device = mongoose.model('Device', {
+            device = mongoose.model('Device', {
                 ID: String
             });
             
