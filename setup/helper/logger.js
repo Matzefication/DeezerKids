@@ -13,7 +13,7 @@ module.exports = function() {
     };
 
     _info = function(message) {
-      console.log(config.logger.message + "INFO:\t\t" + message);
+      console.log(config.logger.message + "INFO:\t" + message);
     };
 
     _success = function(message) {
