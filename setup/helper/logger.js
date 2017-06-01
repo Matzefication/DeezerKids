@@ -5,19 +5,19 @@ var config  = require("../config.json");
 \*****************************************************************************/
 module.exports = function() {
     _error = function(message) {
-      console.log(config.logger.message + "ERROR: " + message);
+      console.log(config.logger.message + "ERROR:\t" + message);
     };
     
     _warn = function(message) {
-      console.log(config.logger.message + "WARNING: " + message);
+      console.log(config.logger.message + "WARNING:\t" + message);
     };
 
     _info = function(message) {
-      console.log(config.logger.message + "INFO: " + message);
+      console.log(config.logger.message + "INFO:\t\t" + message);
     };
 
     _success = function(message) {
-      console.log(config.logger.message + "SUCCESS: " + message);
+      console.log(config.logger.message + "SUCCESS:\t" + message);
     };
 
     return {
