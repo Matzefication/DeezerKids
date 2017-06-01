@@ -12,7 +12,9 @@ var async               = require("async"),
     methodOverride      = require('method-override'),
     
     config              = require("./config.json"),
-    device              = {};
+    
+    mode                = "setup",      // starts in setup mode
+    device              = {};           // initialize an empty device
 
 async.series([
     /////////////////////////////////////////////////////////////////////
