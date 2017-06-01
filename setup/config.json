@@ -20,5 +20,9 @@
 
     "server": {
         "port": 8000
+    },
+
+    "logger": {
+        "message": "DeezerKids: "
     }
 }
