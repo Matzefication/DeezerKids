@@ -5,111 +5,17 @@
         .module('DeezerKids')
         .controller('StartupController', StartupController);
 
-    StartupController.$inject = ['$http', '$cookieStore', '$rootScope', '$location', 'Auth', 'FlashService', '$mdDialog', 'LoadingService'];
+    StartupController.$inject = ['$http', '$rootScope', '$location'];
 
-    function StartupController($http, $cookieStore, $rootScope, $location, Auth, FlashService, $mdDialog, LoadingService) {
+    function StartupController($http, $rootScope, $location) {
 
         // Declarations
         var vm = this;
         vm.path = $location.path();
 
         (function initController() {
-            // reset login status
+            // reset status
             $rootScope.globals = {};
         })();
-
-        // Public functions
-        vm.login = function () {
-            // Ladesymbol anzeigen
-            LoadingService.Start();
-
-            Auth.$signInWithEmailAndPassword(vm.username, vm.password)
-                .then(function (firebaseUser) {
-                    $rootScope.globals = {
-                        currentUser: {
-                            username: firebaseUser.email,
-                            name: firebaseUser.displayName,
-                            uid: firebaseUser.uid
-                        }
-                    };
-
-                    $http.defaults.headers.common['Authorization'] = $rootScope.globals.currentUser.uid
-                    $cookieStore.put('globals', $rootScope.globals);
-
-                    $location.path('/');
-                })
-                .catch(function (error) {
-                    // Ladesymbol ausblenden
-                    LoadingService.Stop();
-
-                    FlashService.Error(error);
-                });
-        };
-
-        vm.register = function () {
-            // Ladesymbol anzeigen
-            LoadingService.Start();
-
-            // Benutzer registrieren
-            Auth.$createUserWithEmailAndPassword(vm.username, vm.password)
-                .then(function (firebaseUser) {
-                    firebaseUser.updateProfile({
-                            displayName: vm.name
-                        })
-                        .then(function () {
-                            $rootScope.globals = {
-                                currentUser: {
-                                    username: firebaseUser.email,
-                                    name: firebaseUser.displayName,
-                                    uid: firebaseUser.uid
-                                }
-                            };
-
-                            $http.defaults.headers.common['Authorization'] = $rootScope.globals.currentUser.uid
-                            $cookieStore.put('globals', $rootScope.globals);
-
-                            $location.path('/');
-                        })
-                        .catch(function (error) {
-                            // Ladesymbol ausblenden
-                            LoadingService.Stop();
-
-                            FlashService.Error(error);
-                        });
-                })
-                .catch(function (error) {
-                    // Ladesymbol ausblenden
-                    LoadingService.Stop();
-
-                    FlashService.Error(error);
-                });
-        };
-
-        vm.newpwd = function () {
-            // Ladesymbol anzeigen
-            LoadingService.Start();
-
-            Auth.$sendPasswordResetEmail(vm.username)
-                .then(function () {
-                    $mdDialog.show(
-                        $mdDialog.alert()
-                        .parent(angular.element(document.querySelector('#popupContainer')))
-                        .clickOutsideToClose(true)
-                        .title('Passwort-Reset erfolgreich.')
-                        .textContent('Wir haben Ihnen eine E-Mail mit einer Anleitung zum Zurücksetzen Ihres Passwortes zugeschickt.')
-                        .ok('Oki Doki')
-                    );
-
-                    // Ladesymbol ausblenden
-                    LoadingService.Stop();
-
-                    $location.path('/login');
-                }).catch(function (error) {
-                    // Ladesymbol ausblenden
-                    LoadingService.Stop();
-
-                    FlashService.Error(error);
-                });
-        };
     }
 })();
