@@ -6,6 +6,11 @@
 
         <div class="panel-body">
             <span class="md-subhead">Let's play some music.</span>
-        </div>
+            <div class="list-group" ng-repeat="message in vm.messages">
+                <a href="/#/" class="list-group-item">
+                    <h3>{{message}}</h3>
+                </a>
+            </div>
+        </div>        
     </div>
 </div>
