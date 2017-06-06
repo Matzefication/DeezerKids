@@ -17,7 +17,7 @@
 
     function config($routeProvider, $locationProvider, $mdDateLocaleProvider, $mdThemingProvider) {
         $routeProvider.otherwise({
-            redirectTo: '/welcome'
+            redirectTo: '/startup'
         });
 
         $mdDateLocaleProvider.months = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
@@ -55,11 +55,11 @@
 
     function run($rootScope, $location, $cookieStore, $http) {
         $rootScope.$on('$locationChangeStart', function (event, next, current) {
-            // redirect to welcome page if no mode is set
-            var restrictedPage = $.inArray($location.path(), ['/welcome']) === -1;
+            // redirect to startup procedure if no mode is set
+            var restrictedPage = $.inArray($location.path(), ['/startup']) === -1;
             var mode = $rootScope.globals.mode;
             if (restrictedPage && !mode) {
-                $location.path('/welcome');
+                $location.path('/startup');
             }
         });
     }
