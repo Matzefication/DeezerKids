@@ -5,7 +5,8 @@
   "main": "main.js",
   "scripts": {
     "start": "sh run-start.sh",
-    "install": "cd setup && npm install"
+    "provision": "apt-get update -y && apt-get install isc-dhcp-server hostapd iw -y",
+    "install": "sudo npm run-script provision"
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,16 @@
     "url": "https://github.com/Matzefication/DeezerKids/issues"
   },
   "homepage": "https://github.com/Matzefication/DeezerKids#readme",
+  "dependencies": {
+    "express": "~4.15.3",
+    "mongoose": "~4.10.1",
+    "morgan": "~1.2.2",
+    "method-override": "~2.1.2",
+    "body-parser": "^1.11.0",
+    "underscore": "~1.7.0",
+    "async": "~0.9.0",
+    "ejs": "~1.0.0"
+  },
   "devDependencies": {
     "electron": "~1.6.2"
   }
