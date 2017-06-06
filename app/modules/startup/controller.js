@@ -34,7 +34,7 @@ var async               = require("async"),
                 /////////////////////////////////////////////////////////////////////
                 // STEP 1: Check if we have the required dependencies installed
                 /////////////////////////////////////////////////////////////////////
-                dep: function test_deps(next_step) {
+                function test_deps(next_step) {
                     logger.info("checking required dependencies installed");
                     dependency_manager.check_deps({
                         "binaries": ["dhcpd", "hostapd", "iw"],
@@ -42,7 +42,7 @@ var async               = require("async"),
                     }, function(error) {
                         if (error) {
                             logger.error("dependency error, did you run `sudo npm run-script provision`?");
-                            next_step(error, null);
+                            next_step(error, false);
                         } else {
                             logger.success("dependencies successfully installed");
                             next_step(null, true);
