@@ -28,14 +28,13 @@ var async               = require("async"),
 
         // Declarations
         var vm = this;
-        vm.mode = null;
         
         (function initController() {
-            async.series({
+            async.waterfall([
                 /////////////////////////////////////////////////////////////////////
                 // STEP 1: Check if we have the required dependencies installed
                 /////////////////////////////////////////////////////////////////////
-                DEP: function test_deps(next_step) {
+                function test_deps(next_step) {
                     logger.info("checking required dependencies installed");
                     dependency_manager.check_deps({
                         "binaries": ["dhcpd", "hostapd", "iw"],
@@ -43,7 +42,7 @@ var async               = require("async"),
                     }, function(error) {
                         if (error) {
                             logger.error("dependency error, did you run `sudo npm run-script provision`?");
-                            next_step(error, false);
+                            next_step(error, null);
                         } else {
                             logger.success("dependencies successfully installed");
                             next_step(null, true);
@@ -54,7 +53,10 @@ var async               = require("async"),
                 /////////////////////////////////////////////////////////////////////
                 // STEP 2: Check if wifi is enabled / connected
                 /////////////////////////////////////////////////////////////////////
-                WIFI: function test_is_wifi_enabled(next_step) {
+                function test_is_wifi_enabled(result, next_step) {
+                    // Prüfung nur durchlaufen, wenn vorherige Prüfung erfolgreich war
+                    if (!result) next_step(null, false);
+
                     logger.info("checking wifi connection on WLAN0");
                     wifi_manager.is_wifi_enabled(function(error, result_ip) {
                         if (result_ip) {
@@ -65,22 +67,22 @@ var async               = require("async"),
                             next_step(null, false);
                         }
                         next_step(error, null);
-                    });
+                    });                        
                 },      
                 
-         }, function(error, progress) {
+         }, function(error, result) {
                 if (error) {
                     logger.error(error);
-                }
-                
-                angular.forEach(progress, function(value, key) {
-                    if (!value) {
+                } else {
+                    if (result) {
+                        vm.mode = 'player';
+                    } else {
                         vm.mode = 'setup';
-                        logger.info('Starting setup mode');
                     }
-                });
-            });            
-            
+                    
+                    logger.info('Starte im Modus:' + vm.mode);
+                }
+            });  
         })();
     }
 })();
