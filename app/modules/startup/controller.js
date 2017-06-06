@@ -42,21 +42,22 @@ var async               = require("async"),
                     }, function(error) {
                         if (error) {
                             logger.error("dependency error, did you run `sudo npm run-script provision`?");
-                            next_step(error, false);
+                            next_step(error, null);
                         } else {
                             logger.success("dependencies successfully installed");
-                            next_step(null, true);
+                            next_step(null, 'setup');
                         }
                     });
                 },
                 
             ], function(error, mode) {
                 if (error) {
-                  logger.error(error);
+                    logger.error(error);
                 } else if (mode == "setup") {
-                  // start Setup-Mode
+                    // start Setup-Mode
+                    logger.success("Setup wird gestartet");
                 } else if (mode == "player") {
-                  // start Player-Mode
+                    // start Player-Mode
                 }
             });            
             
