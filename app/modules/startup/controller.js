@@ -14,7 +14,7 @@
         vm.path = $location.path();
 
         (function initController() {
-            // reset status
+            // reset mode on startup
             $rootScope.globals = {};
         })();
     }
