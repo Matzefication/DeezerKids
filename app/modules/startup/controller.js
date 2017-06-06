@@ -71,12 +71,6 @@ var async               = require("async"),
                 vm.messages = messages;
                 if (error) {
                     logger.error(error);
-                } else if (mode == "setup") {
-                    // start Setup-Mode
-                    logger.success("Setup wird gestartet");
-                } else if (mode == "player") {
-                    // start Player-Mode
-                    logger.success("Player wird gestartet");
                 }
             });            
             
