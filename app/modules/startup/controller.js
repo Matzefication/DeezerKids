@@ -70,7 +70,7 @@ var async               = require("async"),
                     });                        
                 },      
                 
-         }, function(error, result) {
+         ], function(error, result) {
                 if (error) {
                     logger.error(error);
                 } else {
