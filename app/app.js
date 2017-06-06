@@ -13,9 +13,9 @@
         .config(config)
         .run(run);
 
-    config.$inject = ['$routeProvider', '$locationProvider', '$mdDateLocaleProvider', '$mdThemingProvider', '$rootScope'];
+    config.$inject = ['$rootScope', '$routeProvider', '$locationProvider', '$mdDateLocaleProvider', '$mdThemingProvider'];
 
-    function config($routeProvider, $locationProvider, $mdDateLocaleProvider, $mdThemingProvider, $rootScope) {
+    function config($rootScope, $routeProvider, $locationProvider, $mdDateLocaleProvider, $mdThemingProvider) {
         $routeProvider.otherwise({
             redirectTo: '/startup'
         });
