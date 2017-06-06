@@ -30,7 +30,35 @@ var async               = require("async"),
         var vm = this;
 
         (function initController() {
-            
+            async.series([
+                /////////////////////////////////////////////////////////////////////
+                // STEP 1: Check if we have the required dependencies installed
+                /////////////////////////////////////////////////////////////////////
+                dep: function test_deps(next_step) {
+                    logger.info("checking required dependencies installed");
+                    dependency_manager.check_deps({
+                        "binaries": ["dhcpd", "hostapd", "iw"],
+                        "files":    ["/etc/init.d/isc-dhcp-server"]
+                    }, function(error) {
+                        if (error) {
+                            logger.error("dependency error, did you run `sudo npm run-script provision`?");
+                            next_step(error, null);
+                        } else {
+                            logger.success("dependencies successfully installed");
+                            next_step(null, true);
+                        }
+                    });
+                },
+                
+            ], function(error, mode) {
+                if (error) {
+                  logger.error(error);
+                } else if (mode == "setup") {
+                  // start Setup-Mode
+                } else if (mode == "player") {
+                  // start Player-Mode
+                }
+            });            
             
         })();
         
