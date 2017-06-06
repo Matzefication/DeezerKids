@@ -22,9 +22,9 @@ var async               = require("async"),
         .module('DeezerKids')
         .controller('StartupController', StartupController);
 
-    StartupController.$inject = ['$http', '$rootScope', '$location', '$q'];
+    StartupController.$inject = ['$http', '$rootScope', '$location'];
 
-    function StartupController($http, $rootScope, $location, $q) {
+    function StartupController($http, $rootScope, $location) {
 
         // Declarations
         var vm = this;
@@ -49,6 +49,23 @@ var async               = require("async"),
                         }
                     });
                 },
+
+                /////////////////////////////////////////////////////////////////////
+                // STEP 2: Check if wifi is enabled / connected
+                /////////////////////////////////////////////////////////////////////
+                wifi: function test_is_wifi_enabled(next_step) {
+                    logger.info("checking wifi connection on WLAN0");
+                    wifi_manager.is_wifi_enabled(function(error, result_ip) {
+                        if (result_ip) {
+                            logger.success("Wifi is enabled, and IP " + result_ip + " assigned");
+                            next_step(null, 'player');
+                        } else {
+                            logger.info("Wifi is not enabled, enabling setup-mode");
+                            next_step(null, 'player');
+                        }
+                        next_step(error, null);
+                    });
+                },      
                 
             ], function(error, mode) {
                 if (error) {
@@ -58,22 +75,10 @@ var async               = require("async"),
                     logger.success("Setup wird gestartet");
                 } else if (mode == "player") {
                     // start Player-Mode
+                    logger.success("Player wird gestartet");
                 }
             });            
             
         })();
-        
-        function asyncGreet(name) {
-          // perform some asynchronous operation, resolve or reject the promise when appropriate.
-          return $q(function(resolve, reject) {
-            setTimeout(function() {
-              if (okToGreet(name)) {
-                resolve('Hello, ' + name + '!');
-              } else {
-                reject('Greeting ' + name + ' is not allowed.');
-              }
-            }, 1000);
-          });
-        }        
     }
 })();
