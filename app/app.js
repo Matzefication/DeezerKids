@@ -57,7 +57,8 @@
         $rootScope.$on('$locationChangeStart', function (event, next, current) {
             // redirect to startup procedure if no mode is set
             var restrictedPage = $.inArray($location.path(), ['/startup']) === -1;
-            var mode = $rootScope.globals.mode;
+            var mode = false;
+            //var mode = $rootScope.globals.mode;
             if (restrictedPage && !mode) {
                 $location.path('/startup');
             }
