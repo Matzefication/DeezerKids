@@ -6,14 +6,11 @@ var async               = require("async"),
     
     express             = require('express'),
     app                 = express(),
-    fs                  = require("fs"),
     morgan              = require('morgan'),
     bodyParser          = require('body-parser'),
     methodOverride      = require('method-override'),
     
-    config              = require("./config.json"),
-
-    device              = {};           // initialize an empty device
+    config              = require("./config.json");
 
 (function () {
     'use strict';
