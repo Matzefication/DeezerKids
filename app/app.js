@@ -13,9 +13,9 @@
         .config(config)
         .run(run);
 
-    config.$inject = ['$rootScope', '$routeProvider', '$locationProvider', '$mdDateLocaleProvider', '$mdThemingProvider'];
+    config.$inject = ['$routeProvider', '$locationProvider', '$mdDateLocaleProvider', '$mdThemingProvider'];
 
-    function config($rootScope, $routeProvider, $locationProvider, $mdDateLocaleProvider, $mdThemingProvider) {
+    function config($routeProvider, $locationProvider, $mdDateLocaleProvider, $mdThemingProvider) {
         $routeProvider.otherwise({
             redirectTo: '/startup'
         });
@@ -49,15 +49,12 @@
             .theme('default')
             .primaryPalette('green')
             .accentPalette('blue-grey');
-        
-        $rootScope.mode = null;
     }
 
     run.$inject = ['$rootScope', '$location', '$cookieStore', '$http'];
 
     function run($rootScope, $location, $cookieStore, $http) {
-        // keep user logged in after page refresh
-        //$rootScope.globals = $cookieStore.get('globals') || {};
+        $rootScope.mode = null;
         
         $rootScope.$on('$locationChangeStart', function (event, next, current) {
             // redirect to startup procedure if no mode is set
