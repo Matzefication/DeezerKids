@@ -69,6 +69,54 @@ var async               = require("async"),
                         next_step(error, null);
                     });                        
                 },      
+
+                /////////////////////////////////////////////////////////////////////
+                // STEP 3: Check if device-ID already set
+                /////////////////////////////////////////////////////////////////////
+                function test_deviceID(result, next_step) {
+                    // Prüfung nur durchlaufen, wenn vorherige Prüfung erfolgreich war
+                    if (!result) next_step(null, false);
+
+                    logger.info("checking device-ID");
+                    //logger.info("connecting to local database");
+                    mongoose.connect('mongodb://localhost/DeezerKids');
+                    var db = mongoose.connection;
+
+                    db.on('error', function() {
+                        logger.error("Mongo-DB connection error");
+                        next_step(true, null);
+                    });
+
+                    db.once('open', function() {
+                        //logger.success("succesfully connected to database");
+
+                        device = mongoose.model('Device', {
+                            ID: String
+                        });
+                        device.findOne(function(error, result) {
+                            // if there is an error retrieving, send the error. nothing after res.send(err) will execute
+                            if (error) {
+                                logger.error("error retrieving data from database");
+                                next_step(error, null);
+                            } else if (result.Data == null) {
+                                logger.info("No device-ID found.");
+                                next_step(null, false);
+                            } else {
+                                logger.success("Device-ID already set");
+                                next_step(null, true);
+                            }
+                        });          
+                    });    
+                },
+
+                /////////////////////////////////////////////////////////////////////
+                // STEP 4: Validate AccessToken
+                /////////////////////////////////////////////////////////////////////
+
+                /////////////////////////////////////////////////////////////////////
+                // STEP 5: Validate Playlist
+                /////////////////////////////////////////////////////////////////////
+                
                 
          ], function(error, result) {
                 if (error) {
