@@ -9,8 +9,8 @@
     config.$inject = ['$routeProvider'];
 
     function config($routeProvider) {
-        $routeProvider.when('/', {
-            templateUrl: 'app/modules/player/view.html',
+        $routeProvider.when('/player', {
+            templateUrl: 'app/modules/player/player.view.html',
             controller: 'PlayerController',
             controllerAs: 'vm'
         });
