@@ -51,9 +51,9 @@
             .accentPalette('blue-grey');
     }
 
-    run.$inject = ['$rootScope', '$location', '$cookieStore', '$http'];
+    run.$inject = ['$rootScope', '$location', '$http'];
 
-    function run($rootScope, $location, $cookieStore, $http) {
+    function run($rootScope, $location, $http) {
         $rootScope.$on('$locationChangeStart', function (event, next, current) {
             // redirect to startup procedure if no mode is set
             var restrictedPage = $.inArray($location.path(), ['/startup']) === -1;
