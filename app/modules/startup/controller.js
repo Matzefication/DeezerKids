@@ -28,13 +28,14 @@ var async               = require("async"),
 
         // Declarations
         var vm = this;
-
+        vm.mode = null;
+        
         (function initController() {
-            async.series([
+            async.series({
                 /////////////////////////////////////////////////////////////////////
                 // STEP 1: Check if we have the required dependencies installed
                 /////////////////////////////////////////////////////////////////////
-                function test_deps(next_step) {
+                DEP: function test_deps(next_step) {
                     logger.info("checking required dependencies installed");
                     dependency_manager.check_deps({
                         "binaries": ["dhcpd", "hostapd", "iw"],
@@ -42,10 +43,10 @@ var async               = require("async"),
                     }, function(error) {
                         if (error) {
                             logger.error("dependency error, did you run `sudo npm run-script provision`?");
-                            next_step(error, null);
+                            next_step(error, false);
                         } else {
                             logger.success("dependencies successfully installed");
-                            next_step(null, 'setup');
+                            next_step(null, true);
                         }
                     });
                 },
@@ -53,25 +54,31 @@ var async               = require("async"),
                 /////////////////////////////////////////////////////////////////////
                 // STEP 2: Check if wifi is enabled / connected
                 /////////////////////////////////////////////////////////////////////
-                function test_is_wifi_enabled(next_step) {
+                WIFI: function test_is_wifi_enabled(next_step) {
                     logger.info("checking wifi connection on WLAN0");
                     wifi_manager.is_wifi_enabled(function(error, result_ip) {
                         if (result_ip) {
                             logger.success("Wifi is enabled, and IP " + result_ip + " assigned");
-                            next_step(null, 'player');
+                            next_step(null, true);
                         } else {
-                            logger.info("Wifi is not enabled, enabling setup-mode");
-                            next_step(null, 'player');
+                            logger.error("Wifi is not enabled, enabling setup-mode");
+                            next_step(null, false);
                         }
                         next_step(error, null);
                     });
                 },      
                 
-            ], function(error, messages) {
-                vm.messages = messages;
+         }, function(error, progress) {
                 if (error) {
                     logger.error(error);
                 }
+                
+                angular.forEach(progress, function(value, key) {
+                    if (!value) {
+                        vm.mode = 'setup';
+                        logger.info('Starting setup mode');
+                    }
+                });
             });            
             
         })();
