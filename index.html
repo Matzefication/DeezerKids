@@ -16,7 +16,7 @@
     <link href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.4/angular-material.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Abel|Open+Sans:400,600' rel='stylesheet'>
-    <link href="//netdna.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" />
     <link href="assets/libs/angularloading/angular-loading.css" rel="stylesheet" type="text/css" />
     <link href="assets/css/normalize.css" rel="stylesheet" />
     <link href="assets/css/app.css" rel="stylesheet" />
@@ -44,7 +44,7 @@
 
     <!-- jQuery und Bootstrap API -->
     <script src="http://code.jquery.com/jquery-latest.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <!-- Angular.js API -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
@@ -56,7 +56,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.4/angular-material.min.js"></script>
 
     <!-- angular-loading API -->
-    <script src="//cdnjs.cloudflare.com/ajax/libs/spin.js/1.2.7/spin.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/spin.js/1.2.7/spin.min.js"></script>
     <script src="assets/libs/angularloading/angular-loading.min.js"></script>
 
     <!-- Additional Scripts -->
@@ -65,10 +65,18 @@
     <!-- App itself -->
     <script src="app/app.js"></script>
 
+    <!-- Startup Module -->
+    <script src="app/modules/startup/config.route.js"></script>
+    <script src="app/modules/startup/controller.js"></script>    
+    
+    <!-- Setup Module -->
+    <script src="app/modules/setup/config.route.js"></script>
+    <script src="app/modules/setup/controller.js"></script>
+
     <!-- Player Module -->
     <script src="app/modules/player/config.route.js"></script>
-    <script src="app/modules/player/controller.js"></script>
-
+    <script src="app/modules/player/controller.js"></script>    
+    
     <!-- Services -->
     <script src="app/services/flash.service.js"></script>
 
