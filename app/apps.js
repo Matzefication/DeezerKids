@@ -17,7 +17,7 @@
 
     function config($routeProvider, $locationProvider, $mdDateLocaleProvider, $mdThemingProvider) {
         $routeProvider.otherwise({
-            redirectTo: '/login'
+            redirectTo: '/welcome'
         });
 
         $mdDateLocaleProvider.months = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
@@ -54,18 +54,12 @@
     run.$inject = ['$rootScope', '$location', '$cookieStore', '$http'];
 
     function run($rootScope, $location, $cookieStore, $http) {
-        // keep user logged in after page refresh
-        $rootScope.globals = $cookieStore.get('globals') || {};
-        if ($rootScope.globals.currentUser) {
-            $http.defaults.headers.common['Authorization'] = $rootScope.globals.currentUser.uid;
-        }
-
         $rootScope.$on('$locationChangeStart', function (event, next, current) {
-            // redirect to login page if not logged in and trying to access a restricted page
-            var restrictedPage = $.inArray($location.path(), ['/login']) === -1;
-            var loggedIn = $rootScope.globals.currentUser;
-            if (restrictedPage && !loggedIn) {
-                $location.path('/login');
+            // redirect to welcome page if no mode is set
+            var restrictedPage = $.inArray($location.path(), ['/welcome']) === -1;
+            var mode = $rootScope.globals.mode;
+            if (restrictedPage && !mode) {
+                $location.path('/welcome');
             }
         });
     }
