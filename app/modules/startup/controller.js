@@ -53,7 +53,7 @@ var async               = require("async"),
                 /////////////////////////////////////////////////////////////////////
                 // STEP 2: Check if wifi is enabled / connected
                 /////////////////////////////////////////////////////////////////////
-                wifi: function test_is_wifi_enabled(next_step) {
+                function test_is_wifi_enabled(next_step) {
                     logger.info("checking wifi connection on WLAN0");
                     wifi_manager.is_wifi_enabled(function(error, result_ip) {
                         if (result_ip) {
@@ -67,7 +67,8 @@ var async               = require("async"),
                     });
                 },      
                 
-            ], function(error, mode) {
+            ], function(error, messages) {
+                vm.messages = messages;
                 if (error) {
                     logger.error(error);
                 } else if (mode == "setup") {
