@@ -10,9 +10,9 @@
 
     function config($routeProvider) {
         $routeProvider
-            .when('/login', {
-                templateUrl: 'app/modules/login/login.view.html',
-                controller: 'LoginController',
+            .when('/setup', {
+                templateUrl: 'app/modules/setup/setup.view.html',
+                controller: 'SetupController',
                 controllerAs: 'vm'
             })
     }
