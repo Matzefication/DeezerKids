@@ -109,50 +109,25 @@ var async               = require("async"),
                 if (error) {
                     logger.error(error);
                 } else {
-                    
-        logger.info("starting webserver for user-interfaces");
-        app.use(express.static(__dirname + '/public'));                 // set the static files location /public/img will be /img for users
-        app.use(morgan('dev'));                                         // log every request to the console
-        app.use(bodyParser.urlencoded({'extended':'true'}));            // parse application/x-www-form-urlencoded
-        app.use(bodyParser.json());                                     // parse application/json
-        app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse application/vnd.api+json as json
-        app.use(methodOverride());
+                    logger.info("starting webserver for user-interfaces");
+                    app.use(express.static(__dirname + '/public'));                 // set the static files location /public/img will be /img for users
+                    app.use(morgan('dev'));                                         // log every request to the console
+                    app.use(bodyParser.urlencoded({'extended':'true'}));            // parse application/x-www-form-urlencoded
+                    app.use(bodyParser.json());                                     // parse application/json
+                    app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse application/vnd.api+json as json
+                    app.use(methodOverride());
 
-        // routes ---------------------------------------------------------------------
-        // get the stored device
-        app.get('/api/device', function(req, res) {
+                    // application -------------------------------------------------------------
+                    app.get('*', function(req, res) {
+                        res.sendfile('../../../pu/index.html'); // load the single view file (angular will handle the page changes on the front-end)
+                    });
 
-        });
+                    // listen (start app with node server.js) ======================================
+                    app.listen(config.server.port);
+                    logger.success("listening on port " + config.server.port);
 
-        // create device and send back after creation
-        app.post('/api/device', function(req, res) {
-
-        });        
-        
-        // reset the device
-        app.delete('/api/device', function(req, res) {
-
-        });        
-        
-        // application -------------------------------------------------------------
-        app.get('*', function(req, res) {
-            res.sendfile('./public/index.html'); // load the single view file (angular will handle the page changes on the front-end)
-        });
-
-        // listen (start app with node server.js) ======================================
-        app.listen(config.server.port);
-        logger.success("listening on port " + config.server.port);
-        
-        next_step(null);
-    }    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
+                    next_step(null);
+                      
                     if (result) {
                         vm.mode = 'player';
                     } else {
