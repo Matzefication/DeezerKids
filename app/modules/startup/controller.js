@@ -31,7 +31,7 @@ var async               = require("async"),
                 /////////////////////////////////////////////////////////////////////
                 // STEP 1: Check if we have the required dependencies installed
                 /////////////////////////////////////////////////////////////////////
-                function test_deps(next_step) {
+                async.asyncify(function test_deps(next_step) {
                     logger.info("checking required dependencies installed");
                     dependency_manager.check_deps({
                         "binaries": ["dhcpd", "hostapd", "iw"],
@@ -45,12 +45,12 @@ var async               = require("async"),
                             next_step(null, true);
                         }
                     });
-                },
+                }),
 
                 /////////////////////////////////////////////////////////////////////
                 // STEP 2: Check if wifi is enabled / connected
                 /////////////////////////////////////////////////////////////////////
-                function test_is_wifi_enabled(result, next_step) {
+                async.asyncify(function test_is_wifi_enabled(result, next_step) {
                     // Prüfung nur durchlaufen, wenn vorherige Prüfung erfolgreich war
                     if (!result) next_step(null, false);
 
@@ -65,12 +65,12 @@ var async               = require("async"),
                         }
                         next_step(error, null);
                     });                        
-                },      
+                }),      
 
                 /////////////////////////////////////////////////////////////////////
                 // STEP 3: Check if device-ID already set
                 /////////////////////////////////////////////////////////////////////
-                function test_deviceID(result, next_step) {
+                async.asyncify(function test_deviceID(result, next_step) {
                     // Prüfung nur durchlaufen, wenn vorherige Prüfung erfolgreich war
                     if (!result) next_step(null, false);
 
@@ -81,35 +81,35 @@ var async               = require("async"),
                     } else {
                         next_step(null, false);
                     }*/
-                },
+                }),
 
                 /////////////////////////////////////////////////////////////////////
                 // STEP 4: Validate AccessToken
                 /////////////////////////////////////////////////////////////////////
-                function test_accesstoken(result, next_step) {
+                async.asyncify(function test_accesstoken(result, next_step) {
                     // Prüfung nur durchlaufen, wenn vorherige Prüfung erfolgreich war
                     if (!result) next_step(null, false);
 
                     logger.info("checking access-token");
                     next_step(null, true);
-                },
+                }),
                 
                 /////////////////////////////////////////////////////////////////////
                 // STEP 5: Validate Playlist
                 /////////////////////////////////////////////////////////////////////
-                function test_playlist(result, next_step) {
+                async.asyncify(function test_playlist(result, next_step) {
                     // Prüfung nur durchlaufen, wenn vorherige Prüfung erfolgreich war
                     if (!result) next_step(null, false);
 
                     logger.info("checking playlist");
                     next_step(null, true);
-                },                
+                }),                
                 
          ], function(error, result) {
                 if (error) {
                     logger.error(error);
                 } else {
-                    logger.info("starting webserver for user-interfaces");
+                    /*logger.info("starting webserver for user-interfaces");
                     app.use(express.static(__dirname + '/public'));                 // set the static files location /public/img will be /img for users
                     app.use(morgan('dev'));                                         // log every request to the console
                     app.use(bodyParser.urlencoded({'extended':'true'}));            // parse application/x-www-form-urlencoded
@@ -124,9 +124,7 @@ var async               = require("async"),
 
                     // listen (start app with node server.js) ======================================
                     app.listen(config.server.port);
-                    logger.success("listening on port " + config.server.port);
-
-                    next_step(null);
+                    logger.success("listening on port " + config.server.port);*/
                       
                     if (result) {
                         vm.mode = 'player';
