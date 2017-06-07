@@ -31,7 +31,7 @@ var async               = require("async"),
                 /////////////////////////////////////////////////////////////////////
                 // STEP 1: Check if we have the required dependencies installed
                 /////////////////////////////////////////////////////////////////////
-                async.asyncify(function test_deps(next_step) {
+                function test_deps(next_step) {
                     logger.info("checking required dependencies installed");
                     dependency_manager.check_deps({
                         "binaries": ["dhcpd", "hostapd", "iw"],
@@ -39,18 +39,18 @@ var async               = require("async"),
                     }, function(error) {
                         if (error) {
                             logger.error("dependency error, did you run `sudo npm run-script provision`?");
-                            next_step(error, null);
+                            //next_step(error, null);
                         } else {
                             logger.success("dependencies successfully installed");
-                            next_step(null, true);
+                            //next_step(null, true);
                         }
                     });
-                }),
+                },
 
                 /////////////////////////////////////////////////////////////////////
                 // STEP 2: Check if wifi is enabled / connected
                 /////////////////////////////////////////////////////////////////////
-                async.asyncify(function test_is_wifi_enabled(result, next_step) {
+                function test_is_wifi_enabled(result, next_step) {
                     // Prüfung nur durchlaufen, wenn vorherige Prüfung erfolgreich war
                     if (!result) next_step(null, false);
 
@@ -65,12 +65,12 @@ var async               = require("async"),
                         }
                         next_step(error, null);
                     });                        
-                }),      
+                },      
 
                 /////////////////////////////////////////////////////////////////////
                 // STEP 3: Check if device-ID already set
                 /////////////////////////////////////////////////////////////////////
-                async.asyncify(function test_deviceID(result, next_step) {
+                function test_deviceID(result, next_step) {
                     // Prüfung nur durchlaufen, wenn vorherige Prüfung erfolgreich war
                     if (!result) next_step(null, false);
 
@@ -81,29 +81,29 @@ var async               = require("async"),
                     } else {
                         next_step(null, false);
                     }*/
-                }),
+                },
 
                 /////////////////////////////////////////////////////////////////////
                 // STEP 4: Validate AccessToken
                 /////////////////////////////////////////////////////////////////////
-                async.asyncify(function test_accesstoken(result, next_step) {
+                function test_accesstoken(result, next_step) {
                     // Prüfung nur durchlaufen, wenn vorherige Prüfung erfolgreich war
                     if (!result) next_step(null, false);
 
                     logger.info("checking access-token");
                     next_step(null, true);
-                }),
+                },
                 
                 /////////////////////////////////////////////////////////////////////
                 // STEP 5: Validate Playlist
                 /////////////////////////////////////////////////////////////////////
-                async.asyncify(function test_playlist(result, next_step) {
+                function test_playlist(result, next_step) {
                     // Prüfung nur durchlaufen, wenn vorherige Prüfung erfolgreich war
                     if (!result) next_step(null, false);
 
                     logger.info("checking playlist");
                     next_step(null, true);
-                }),                
+                },                
                 
          ], function(error, result) {
                 if (error) {
