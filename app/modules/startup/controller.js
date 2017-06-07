@@ -76,17 +76,17 @@ var async               = require("async"),
 
                     logger.info("checking device-ID");
                     
-                    if (config.device.ID) {
+                    /*if (config.device.ID) {
                         next_step(null, true);
                     } else {
                         next_step(null, false);
-                    }
+                    }*/
                 },
 
                 /////////////////////////////////////////////////////////////////////
                 // STEP 4: Validate AccessToken
                 /////////////////////////////////////////////////////////////////////
-                function test_deviceID(result, next_step) {
+                function test_accesstoken(result, next_step) {
                     // Prüfung nur durchlaufen, wenn vorherige Prüfung erfolgreich war
                     if (!result) next_step(null, false);
 
@@ -97,7 +97,7 @@ var async               = require("async"),
                 /////////////////////////////////////////////////////////////////////
                 // STEP 5: Validate Playlist
                 /////////////////////////////////////////////////////////////////////
-                function test_deviceID(result, next_step) {
+                function test_playlist(result, next_step) {
                     // Prüfung nur durchlaufen, wenn vorherige Prüfung erfolgreich war
                     if (!result) next_step(null, false);
 
