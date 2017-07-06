@@ -94,6 +94,9 @@ var wifi_manager        = require("./helper/wifi_manager")(),
             });
         }             
         
+        /////////////////////////////////////////////////////////////////////
+        // Start SETUP Mode
+        /////////////////////////////////////////////////////////////////////        
         function start_setup() {
             /*logger.info("starting webserver for user-interfaces");
             app.use(express.static(__dirname + '/public'));                 // set the static files location /public/img will be /img for users
@@ -116,11 +119,17 @@ var wifi_manager        = require("./helper/wifi_manager")(),
             logger.info('Starte im Modus:' + vm.mode);
         }
         
+        /////////////////////////////////////////////////////////////////////
+        // Start PLAYER Mode
+        /////////////////////////////////////////////////////////////////////        
         function start_player() {
             vm.mode = 'player';
             logger.info('Starte im Modus:' + vm.mode);
         }
-        
+
+        /////////////////////////////////////////////////////////////////////
+        // Workflow
+        /////////////////////////////////////////////////////////////////////        
         test_deps()
         .then(test_is_wifi_enabled())
         .then(test_deviceID())
