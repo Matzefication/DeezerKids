@@ -22,16 +22,16 @@ var wifi_manager        = require("./helper/wifi_manager")(),
         /////////////////////////////////////////////////////////////////////        
         function test_deps() {
             return $q(function (resolve, reject) {
-                logger.info("checking required dependencies installed");
+                logger.info("STARTUP STEP 1: checking required dependencies installed");
                 dependency_manager.check_deps({
                     "binaries": ["dhcpd", "hostapd", "iw"],
                     "files":    ["/etc/init.d/isc-dhcp-server"]
                 }, function(error) {
                     if (error) {
-                        logger.error("dependency error, did you run `sudo npm run-script provision`?");
+                        logger.error("STARTUP STEP 1: dependency error, did you run `sudo npm run-script provision`?");
                         reject(error);
                     } else {
-                        logger.success("dependencies successfully installed");
+                        logger.success("STARTUP STEP 1: dependencies successfully installed");
                         resolve();
                     }
                 });                
@@ -43,13 +43,13 @@ var wifi_manager        = require("./helper/wifi_manager")(),
         /////////////////////////////////////////////////////////////////////        
         function test_is_wifi_enabled() {
             return $q(function (resolve, reject) {
-				logger.info("checking wifi connection on WLAN0");
+				logger.info("STARTUP STEP 2: checking wifi connection on WLAN0");
 				wifi_manager.is_wifi_enabled(function(error, result_ip) {
 					if (result_ip) {
-						logger.success("Wifi is enabled, and IP " + result_ip + " assigned");
+						logger.success("STARTUP STEP 2: Wifi is enabled, and IP " + result_ip + " assigned");
 						resolve();
 					} else {
-						logger.error("Wifi is not enabled, enabling setup-mode");
+						logger.error("STARTUP STEP 2: Wifi is not enabled, enabling setup-mode");
 						reject(error);
 					}
 				});  			
@@ -61,7 +61,8 @@ var wifi_manager        = require("./helper/wifi_manager")(),
         /////////////////////////////////////////////////////////////////////
         function test_deviceID() {
             return $q(function (resolve, reject) {
-                logger.info("checking device-ID");
+                logger.info("STARTUP STEP 3: checking device-ID");
+                logger.success("STARTUP STEP 3: device-ID already set");
                 resolve();
                 /*if (config.device.ID) {
                     next_step(null, true);
@@ -76,7 +77,8 @@ var wifi_manager        = require("./helper/wifi_manager")(),
         /////////////////////////////////////////////////////////////////////
         function test_accesstoken() {
             return $q(function (resolve, reject) {
-                logger.info("checking access-token");
+                logger.info("STARTUP STEP 4: checking access-token");
+                logger.success("STARTUP STEP 4: access-token is valid");
                 resolve();
             });
         }
@@ -86,7 +88,8 @@ var wifi_manager        = require("./helper/wifi_manager")(),
         /////////////////////////////////////////////////////////////////////
         function test_playlist() {
             return $q(function (resolve, reject) {
-                logger.info("checking playlist");
+                logger.info("STARTUP STEP 5: checking playlist");
+		logger.success("STARTUP STEP 5: playlist is set and valid");
                 resolve();
             });
         }             
