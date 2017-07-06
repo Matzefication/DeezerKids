@@ -10,7 +10,7 @@
 
     function config($routeProvider) {
         $routeProvider.when('/player', {
-            templateUrl: 'app/modules/player/player.view.html',
+            templateUrl: 'app/modules/player/view.html',
             controller: 'PlayerController',
             controllerAs: 'vm'
         });
