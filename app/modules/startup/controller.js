@@ -117,6 +117,7 @@ var wifi_manager        = require("./helper/wifi_manager")(),
 
             vm.mode = 'setup';
             logger.info('Starte im Modus:' + vm.mode);
+	    $location.path('/setup');
         }
         
         /////////////////////////////////////////////////////////////////////
@@ -125,6 +126,7 @@ var wifi_manager        = require("./helper/wifi_manager")(),
         function start_player() {
             vm.mode = 'player';
             logger.info('Starte im Modus:' + vm.mode);
+	    $location.path('/player');
         }
 
         /////////////////////////////////////////////////////////////////////
