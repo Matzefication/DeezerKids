@@ -11,7 +11,7 @@
     function config($routeProvider) {
         $routeProvider
             .when('/startup', {
-                templateUrl: 'app/modules/startup/startup.view.html',
+                templateUrl: 'app/modules/startup/view.html',
                 controller: 'StartupController',
                 controllerAs: 'vm'
             })
